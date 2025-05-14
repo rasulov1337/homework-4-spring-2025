@@ -1,3 +1,4 @@
+import json
 from os import environ
 
 import pytest
@@ -17,6 +18,27 @@ from ui.pages.main_page import MainPage
 # from ui.pages.leadforms_page import LeadFormsPage
 # from ui.pages.survey_page import SurveyPage
 # from ui.pages.sites_page import SitePage
+
+
+SESSION_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'session_data.json')
+
+@pytest.fixture
+def load_session_data(driver):
+    with open(SESSION_FILE, "r") as f:
+        data = json.load(f)
+
+    # Устанавливаем localStorage
+    for key, value in data.get("localStorage", {}).items():
+        driver.execute_script(f"window.localStorage.setItem('{key}', '{value}');")
+
+    # Устанавливаем cookies
+    for cookie in data.get("cookies", []):
+        driver.add_cookie(cookie)
+
+    # Перезагружаем страницу, чтобы сессия вступила в силу
+    driver.refresh()
+
+    return driver
 
 
 @pytest.fixture()

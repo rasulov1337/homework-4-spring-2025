@@ -16,9 +16,8 @@ class BaseCase:
         self.config = config
 
         if self.authorize:
-            credentials = request.getfixturevalue("credentials")
+            request.getfixturevalue("load_session_data")
             driver.get(MainPage.url)
-            MainPage(driver).login(*credentials)
 
 
 class NoAuthCase:
