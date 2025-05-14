@@ -17,7 +17,7 @@ class TestCompany(BaseCase):
         company_page.apply_target()
 
         company_page.click_next()
-
+        company_page.check_not_click_next()
         company_page.set_region()
         assert 'Россия' in company_page.driver.page_source
         company_page.click_next()

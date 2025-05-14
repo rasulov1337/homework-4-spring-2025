@@ -1,6 +1,7 @@
 from .base_page import BasePage
 from ui.locators.company_locators import CompanyPageLocators
 from enum import Enum
+import time
 
 class CompanyTarget(Enum):
     SITE = 'site'
@@ -15,6 +16,10 @@ class CompanyPage(BasePage):
 
     def open_companies_list(self):
         self.click(self.locators.LOGO)
+        # self.became_visible(self.locators.SAVE_DRAFT_COMPANY_MODAL)
+        # self.click(self.locators.SAVE_DRAFT_COMPANY_MODAL_CLOSE_BTN)
+        # self.became_invisible(self.locators.SAVE_DRAFT_COMPANY_MODAL)
+        # self.click(self.locators.LOGO)
         self.click(self.locators.left_menu.COMPANIES_BTN)
 
     def open_companies_drafts(self):
@@ -86,3 +91,9 @@ class CompanyPage(BasePage):
 
     def save_company(self):
         self.click(self.locators.SAVE_COMPANY_BTN)
+
+    def check_not_click_next(self):
+        self.became_invisible(self.locators.ERROR_LOCATOR, 5)
+        self.click(self.locators.NEXT_BTN)
+        return
+        
