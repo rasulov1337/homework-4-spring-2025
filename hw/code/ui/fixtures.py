@@ -75,6 +75,9 @@ def audience_page(driver):
 @pytest.fixture
 def commerce_center_page(driver):
     driver.get(CommerceCenterPage.url)
+    page = CommerceCenterPage(driver=driver)
+    if page.popup_active():
+            page.close_popup()
     return CommerceCenterPage(driver=driver)
 
 
