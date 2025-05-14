@@ -10,4 +10,5 @@ class TestCommerceCenter(BaseCase):
             commerce_center_page.close_popup()
         commerce_center_page.click_undergo_training()
         commerce_center_page.close_popup()
-        assert 'Как хотите учиться?' in commerce_center_page.find(CommerceCenterPageLocators.CURRENT_POPUP).text
+        training_variants = commerce_center_page.find_all(CommerceCenterPageLocators.TRAINING_OFFER_POPUP_TRAIN_BUTTONS)
+        assert 'Создать каталог с подсказками' in training_variants[0].text and 'Смотреть видеоурок от экспертов VK' in training_variants[1].text and 'Смотреть курс на обучающей платформе' in training_variants[2].text

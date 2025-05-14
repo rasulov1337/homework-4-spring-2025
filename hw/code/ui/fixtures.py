@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import os
 
+from ui.pages.commerce_center_page import CommerceCenterPage
 from ui.pages.auth_page import AuthPage
 # from ui.pages.budget_page import BudgetPage
 from ui.pages.company_page import CompanyPage
@@ -71,10 +72,10 @@ def audience_page(driver):
     return AudiencePage(driver)
 
 
-# @pytest.fixture
-# def commerce_page(driver):
-#     driver.get(CommercePage.url)
-#     return CommercePage(driver=driver)
+@pytest.fixture
+def commerce_center_page(driver):
+    driver.get(CommerceCenterPage.url)
+    return CommerceCenterPage(driver=driver)
 
 
 @pytest.fixture()
