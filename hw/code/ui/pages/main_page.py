@@ -1,6 +1,13 @@
-from ui.pages.overview_page import OverviewPage
-from ui.locators.main_page import MainPageLocators
-from ui.pages.base_page import BasePage
+import time
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from ..pages.overview_page import OverviewPage
+from ..locators.main_page import MainPageLocators
+from ..pages.base_page import BasePage
 
 
 class MainPage(BasePage):
@@ -40,3 +47,72 @@ class MainPage(BasePage):
                 self.locators.MAIN_PAGE_LINKS[item_name]
             )
         )
+
+    # def click_view_all_cases(self):
+    #     for _ in range(3):
+    #         try:
+    #             button = WebDriverWait(self.driver, 3).until(
+    #                 EC.presence_of_element_located(self.locators.VIEW_ALL_CASES_BUTTON)
+    #             )
+    #             self.driver.execute_script(
+    #                 "arguments[0].scrollIntoView({block: 'center', behavior: 'smooth'});",
+    #                 button
+    #             )
+    #             time.sleep(0.5)
+    #
+    #             WebDriverWait(self.driver, 5).until(
+    #                 EC.element_to_be_clickable(self.locators.VIEW_ALL_CASES_BUTTON)
+    #             ).click()
+    #             return
+    #
+    #         except:
+    #             self.driver.execute_script("window.scrollBy(0, 500);")
+    #             time.sleep(0.5)
+
+    def page_find_and_click_button(self, button_text, button_index=1, scroll_pause=0.8, max_scroll_attempts=5,
+                              scroll_step=400):
+        button_locator = (By.XPATH, f"(//*[contains(text(), '{button_text}')])[{button_index}]")
+
+        for attempt in range(1, max_scroll_attempts + 1):
+            try:
+                # Пытаемся найти элемент
+                button = WebDriverWait(self.driver, 3).until(
+                    EC.presence_of_element_located(button_locator)
+                )
+
+                # Прокручиваем к элементу
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center', behavior: 'smooth'});",
+                    button
+                )
+                time.sleep(scroll_pause)
+
+                # Дожидаемся кликабельности
+                button = WebDriverWait(self.driver, 3).until(
+                    EC.element_to_be_clickable(button_locator)
+                )
+
+                # Кликаем через ActionChains
+                ActionChains(self.driver) \
+                    .move_to_element(button) \
+                    .pause(0.3) \
+                    .click(button) \
+                    .perform()
+
+                print(f"Успешно кликнули кнопку '{button_text}' №{button_index}")
+                return True
+
+            except Exception as e:
+                print(f"Попытка {attempt}: кнопка не найдена. Прокручиваем страницу...")
+                self.driver.execute_script(f"window.scrollBy(0, {scroll_step});")
+                time.sleep(scroll_pause)
+
+                if attempt == max_scroll_attempts:
+                    available_buttons = len(self.driver.find_elements(
+                        By.XPATH, f"//*[contains(text(), '{button_text}')]"
+                    ))
+                    raise Exception(
+                        f"Не удалось найти кнопку '{button_text}' №{button_index}. "
+                        f"Всего найдено таких кнопок: {available_buttons}. "
+                        f"Ошибка: {str(e)}"
+                    )

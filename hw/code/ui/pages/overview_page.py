@@ -1,4 +1,4 @@
-from ui.pages.base_page import PageWithView
+from ..pages.base_page import PageWithView
 
 
 class OverviewPage(PageWithView):
