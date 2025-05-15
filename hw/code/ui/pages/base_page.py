@@ -19,9 +19,8 @@ class PageNotOpenedException(Exception):
 
 
 class BasePage(BasePageFunctionality):
-    url = 'https://ads.vk.com/'
+    url = "https://ads.vk.com/"
     locators = BasePageLocators()
-
 
     def __init__(self, driver):
         self.driver = driver
@@ -32,7 +31,9 @@ class BasePage(BasePageFunctionality):
         while time.time() - started < timeout:
             if self.driver.current_url == self.url:
                 return True
-        raise PageNotOpenedException(f'{self.url} did not open in {timeout} sec, current url {self.driver.current_url}')
+        raise PageNotOpenedException(
+            f"{self.url} did not open in {timeout} sec, current url {self.driver.current_url}"
+        )
 
     def wait(self, timeout=None):
         if timeout is None:
@@ -54,18 +55,18 @@ class BasePage(BasePageFunctionality):
     def find_interactable(self, locator, timeout=None):
         return self.wait(timeout).until(EC.element_to_be_clickable(locator))
 
-    @allure.step('Click')
+    @allure.step("Click")
     def click(self, locator, timeout=None) -> WebElement:
-         self.find(locator, timeout=timeout)
-         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
-         elem.click()
-         
+        self.find(locator, timeout=timeout)
+        elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
+        elem.click()
+
     def clear(self, locator, timeout: float | None = None) -> WebElement:
         elem = self.find(locator, timeout)
-        elem.clear()
+        # elem.clear()
 
-        if elem.get_attribute('value') != '':
-            size = len(elem.get_attribute('value'))
+        if elem.get_attribute("value") != "":
+            size = len(elem.get_attribute("value"))
             elem.send_keys(size * Keys.BACKSPACE)
 
         return elem
@@ -100,7 +101,7 @@ class BasePage(BasePageFunctionality):
         return elem
 
     def unfocus(self):
-        self.driver.execute_script('document.activeElement.blur()')
+        self.driver.execute_script("document.activeElement.blur()")
 
     def go_to_new_tab(self):
         handles = self.driver.window_handles
@@ -135,6 +136,8 @@ class BasePage(BasePageFunctionality):
         elem.clear()
         elem.send_keys(value)
 
+    def modal_active(self):
+        return len(self.find_all(self.locators.CURRENT_MODAL)) > 0
 
 
 class PageWithView(BasePageFunctionality):
@@ -157,8 +160,9 @@ def add_open_view(sign_opening_locator):
             openable_elem_result = elem_getter(self, *args, **kwargs)
 
             def open_view():
-                return self.open_view(openable_elem_result,
-                                      sign_opening_locator=sign_opening_locator)
+                return self.open_view(
+                    openable_elem_result, sign_opening_locator=sign_opening_locator
+                )
 
             openable_elem_result.open_view = open_view
 
