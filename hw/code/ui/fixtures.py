@@ -10,14 +10,14 @@ import os
 
 from ui.pages.commerce_center_page import CommerceCenterPage
 from ui.pages.auth_page import AuthPage
-# from ui.pages.budget_page import BudgetPage
+from ui.pages.budget_page import BudgetPage
 from ui.pages.company_page import CompanyPage
 from ui.pages.audience_page import AudiencePage
 from ui.pages.main_page import MainPage
 # from ui.pages.settings_page import SettingsPage
 # from ui.pages.commerce_page import CommercePage
-# from ui.pages.leadforms_page import LeadFormsPage
-# from ui.pages.survey_page import SurveyPage
+from ui.pages.leadforms_page import LeadformPage
+from ui.pages.survey_page import SurveyPage
 # from ui.pages.sites_page import SitePage
 
 
@@ -88,6 +88,10 @@ def company_page(driver):
 def auth_page(driver):
     return AuthPage(driver=driver)
 
+@pytest.fixture()
+def budget_page(driver):
+    driver.get(BudgetPage.url)
+    return BudgetPage(driver)
 
 @pytest.fixture
 def site_page(driver):
@@ -97,8 +101,8 @@ def site_page(driver):
 
 @pytest.fixture
 def leadforms_page(driver):
-    driver.get(LeadFormsPage.url)
-    return LeadFormsPage(driver=driver)
+    driver.get(LeadformPage.url)
+    return LeadformPage(driver=driver)
 
 
 @pytest.fixture

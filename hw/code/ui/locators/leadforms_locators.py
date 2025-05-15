@@ -112,7 +112,6 @@ class LeadFormsPageLocators(BasePageLocators):
 
     UPLOAD_IMAGE_MODAL = (By.XPATH, "(//div[contains(@class, 'ModalSidebarPage_control')])[2]")
 
-    CREATE_LEADFORM_BUTTON = (By.XPATH, f"//*[@test-id='create-leadform-button']")
     DOWNLOAD_LOGO = (By.XPATH, f"//*[@data-testid='set-global-image']")
     CHOOSE_LOGO = (By.XPATH, '//div[contains(@class, "ItemList_item__vc1Gb")]')
     INPUT_NAME_LEAD_FORM = (By.XPATH, '//input[@placeholder="Название лид-формы"]')

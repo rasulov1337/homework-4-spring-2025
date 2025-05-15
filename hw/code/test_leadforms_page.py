@@ -35,35 +35,35 @@ class TestLeadFormsPage(BaseCase):
         assert title_empty.text == expected_message, f"Expected '{expected_message}', got '{title_empty.text}'"
         assert description_empty.text == expected_message, f"Expected '{expected_message}', got '{description_empty.text}'"
     
-    def test_create_leadform(self, leadform_page):
-        leadform_page.click_create_leadform_button()
-        assert leadform_page.is_leadform_page_opened()
+    def test_create_leadform(self, leadforms_page):
+        leadforms_page.click_create_leadform_button()
+        assert leadforms_page.is_leadform_page_opened()
 
-        leadform_page.fill_leadform_name_field(LEADFORM_NAME)
-        leadform_page.click_download_and_choose_logo_button()
-        leadform_page.fill_company_name_field(COMPANY_NAME)
-        leadform_page.fill_leadform_title_field(LEADFORM_TITLE)
-        leadform_page.fill_leadform_description_field(LEADFORM_DESCRIPTION)
-        leadform_page.click_save_button()
+        leadforms_page.fill_leadform_name_field(LEADFORM_NAME)
+        leadforms_page.click_download_and_choose_logo_button()
+        leadforms_page.fill_company_name_field(COMPANY_NAME)
+        leadforms_page.fill_leadform_title_field(LEADFORM_TITLE)
+        leadforms_page.fill_leadform_description_field(LEADFORM_DESCRIPTION)
+        leadforms_page.click_save_button()
 
-        assert leadform_page.is_question_leadform_page_opened()
-        leadform_page.click_save_button()
+        assert leadforms_page.is_question_leadform_page_opened()
+        leadforms_page.click_save_button()
 
-        assert leadform_page.is_result_leadform_page_opened()
-        leadform_page.click_save_button()
+        assert leadforms_page.is_result_leadform_page_opened()
+        leadforms_page.click_save_button()
 
-        assert leadform_page.is_settings_leadform_page_opened()
-        leadform_page.fill_leadform_contacts_field(CONTACTS)
-        leadform_page.fill_leadform_legal_adress_field(COMPANY_ADRESS)
-        leadform_page.click_save_button()
+        assert leadforms_page.is_settings_leadform_page_opened()
+        leadforms_page.fill_leadform_contacts_field(CONTACTS)
+        leadforms_page.fill_leadform_legal_adress_field(COMPANY_ADRESS)
+        leadforms_page.click_save_button()
 
-        assert leadform_page.is_leadform_in_list_exists(LEADFORM_NAME)
+        assert leadforms_page.is_leadform_in_list_exists(LEADFORM_NAME)
 
-    def test_find_leadform(self, leadform_page):
-        leadform_page.fill_find_leadform_field(LEADFORM_NAME)
-        assert leadform_page.is_leadform_in_list_exists(LEADFORM_NAME)
+    def test_find_leadform(self, leadforms_page):
+        leadforms_page.fill_find_leadform_field(LEADFORM_NAME)
+        assert leadforms_page.is_leadform_in_list_exists(LEADFORM_NAME)
 
         unknown_leadform_name = 'Неизвестная лид-форма'
-        leadform_page.fill_find_leadform_field(unknown_leadform_name)
-        assert not leadform_page.is_leadform_in_list_exists(unknown_leadform_name)
+        leadforms_page.fill_find_leadform_field(unknown_leadform_name)
+        assert not leadforms_page.is_leadform_in_list_exists(unknown_leadform_name)
 
