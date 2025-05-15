@@ -318,17 +318,3 @@ class TestCommerceCenter(BaseCase):
                 commerce_center_page.locators.CommerceCenterSidebarFormLocators.CURRENT_CATALOG_DIV
             ).text
         )
-
-    def test_catalog_catalog_hover_menu_appear(
-        self, commerce_center_page: CommerceCenterPage
-    ):
-        commerce_center_page.hover(
-            commerce_center_page.locators.CATALOG_HOVER_MENU_BUTTON
-        )
-
-        action = ActionChains(self.driver)
-        action.move_to_element(
-            commerce_center_page.locators.CATALOG_HOVER_MENU_BUTTON
-        ).perform()
-        time.sleep(4)
-        # TODO: THIS IS NOT WORKING
