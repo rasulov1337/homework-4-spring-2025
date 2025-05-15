@@ -37,3 +37,8 @@ class CommerceCenterPage(BasePage):
 
     def select_position_manually(self):
         self.click(self.locators.CommerceCenterSidebarFormLocators.MANUALLY_BUTTON)
+
+    def click_sidebar_form_create_catalog(self):
+        self.click(
+            self.locators.CommerceCenterSidebarFormLocators.CREATE_CATALOG_BUTTON
+        )

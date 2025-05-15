@@ -36,3 +36,24 @@ class CommerceCenterPageLocators:
             By.XPATH,
             '//span[text()="Автоматически удалять UTM-метки"]',
         )
+        SELLER_LINK_INPUT = (By.XPATH, '//input[@data-testid="catalogUrl-input"]')
+        FEED_CATEGORY_SELECT = (
+            By.XPATH,
+            '//div[contains(@class, "vkuiCustomSelectInput") and span[contains(text(),"Товары")]]',
+        )
+        DOWNLOAD_TEMPLATE_OF_FEED_BUTTON = (
+            By.XPATH,
+            '//a[contains(@class, "FileTemplate_button")]',
+        )
+        FILE_FEED_SELECT = (
+            By.XPATH,
+            '//div[contains(@class, "FeedFileSelector_wrapper")]//input[@type="file"]',
+        )
+        AUTO_DELETE_UTM_LABELS_CHECKBOX_LABEL = (
+            By.XPATH,
+            '//label[contains(@class, "vkuiCheckbox")]//span[text()="Автоматически удалять UTM-метки"]',
+        )
+        CREATE_CATALOG_BUTTON = (By.XPATH, '//button[@data-testid="submit"]')
+        CLIENT_ID_INPUT = (By.XPATH, '//input[@placeholder="Введите Client ID"]')
+        API_KEY_INPUT = (By.XPATH, '//input[@placeholder="Введите ключ API"]')
+        ERROR_TEXT_SPAN = (By.XPATH, '//span[@role="alert"]')
