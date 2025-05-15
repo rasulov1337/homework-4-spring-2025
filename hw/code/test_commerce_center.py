@@ -2,6 +2,7 @@ import time
 from base import BaseCase
 from ui.pages.commerce_center_page import CommerceCenterPage
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 
 class TestCommerceCenter(BaseCase):
@@ -211,3 +212,123 @@ class TestCommerceCenter(BaseCase):
                 commerce_center_page.locators.SIDEBAR_FORM
             ).text
         )
+
+    def test_catalog_manually_empty_file(
+        self, commerce_center_page: CommerceCenterPage
+    ):
+        commerce_center_page.open_catalog_creation_form()
+        commerce_center_page.select_position_manually()
+
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        assert (
+            "Нужно заполнить"
+            in commerce_center_page.find(
+                commerce_center_page.locators.SIDEBAR_FORM
+            ).text
+        )
+
+    def test_catalog_feed_empty_link(self, commerce_center_page: CommerceCenterPage):
+        commerce_center_page.open_catalog_creation_form()
+        commerce_center_page.select_position_feed_or_community()
+
+        commerce_center_page.clear(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT
+        )
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        assert (
+            "Нужно заполнить"
+            in commerce_center_page.find(
+                commerce_center_page.locators.SIDEBAR_FORM
+            ).text
+        )
+
+    def test_catalog_feed_not_link(self, commerce_center_page: CommerceCenterPage):
+        commerce_center_page.open_catalog_creation_form()
+        commerce_center_page.select_position_feed_or_community()
+
+        commerce_center_page.fill_in(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT,
+            "testing",
+        )
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        assert (
+            "Необходимо указать протокол http(s)"
+            in commerce_center_page.find(
+                commerce_center_page.locators.SIDEBAR_FORM
+            ).text
+        )
+
+    def test_catalog_feed_community_without_services(
+        self, commerce_center_page: CommerceCenterPage
+    ):
+        commerce_center_page.open_catalog_creation_form()
+        commerce_center_page.select_position_feed_or_community()
+
+        commerce_center_page.fill_in(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT,
+            "https://vk.com/vkeducation",
+        )
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        commerce_center_page.wait().until(
+            EC.visibility_of_element_located(
+                commerce_center_page.locators.CommerceCenterSidebarFormLocators.FEED_OR_COMMUNITY_ERROR_DIV
+            )
+        )
+
+        assert (
+            "В этом сообществе недостаточно товаров или услуг"
+            in commerce_center_page.find(
+                commerce_center_page.locators.SIDEBAR_FORM
+            ).text
+        )
+
+    def test_catalog_feed_page_redirect(self, commerce_center_page: CommerceCenterPage):
+        commerce_center_page.open_catalog_creation_form()
+        commerce_center_page.select_position_feed_or_community()
+
+        commerce_center_page.fill_in(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.NAME_INPUT,
+            "Some Name",
+        )
+
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        commerce_center_page.fill_in(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT,
+            "https://vk.com/club230422504",
+        )
+
+        commerce_center_page.wait().until(
+            EC.invisibility_of_element_located(
+                commerce_center_page.locators.CommerceCenterSidebarFormLocators.AUTO_DELETE_UTM_LABELS_CHECKBOX_LABEL
+            )
+        )
+
+        commerce_center_page.click_sidebar_form_create_catalog()
+
+        commerce_center_page.wait().until(EC.url_changes(commerce_center_page.url))
+
+        assert (
+            "Some Name"
+            in commerce_center_page.find(
+                commerce_center_page.locators.CommerceCenterSidebarFormLocators.CURRENT_CATALOG_DIV
+            ).text
+        )
+
+    def test_catalog_catalog_hover_menu_appear(
+        self, commerce_center_page: CommerceCenterPage
+    ):
+        commerce_center_page.hover(
+            commerce_center_page.locators.CATALOG_HOVER_MENU_BUTTON
+        )
+
+        action = ActionChains(self.driver)
+        action.move_to_element(
+            commerce_center_page.locators.CATALOG_HOVER_MENU_BUTTON
+        ).perform()
+        time.sleep(4)
+        # TODO: THIS IS NOT WORKING

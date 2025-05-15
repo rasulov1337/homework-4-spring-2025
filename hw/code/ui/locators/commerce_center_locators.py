@@ -15,6 +15,10 @@ class CommerceCenterPageLocators:
     )
     CREATE_CATALOG = (By.XPATH, '//button[@data-testid="create-catalog"]')
     SIDEBAR_FORM = (By.XPATH, '//form[contains(@class, "ModalSidebarPage_container")]')
+    CATALOG_HOVER_MENU_BUTTON = (
+        By.XPATH,
+        '//button[@data-testid="catalog-item-menu"]',
+    )
 
     class CommerceCenterSidebarFormLocators:
         CANCEL_BUTTON = (By.XPATH, '//button[@data-testid="cancel"]')
@@ -57,3 +61,8 @@ class CommerceCenterPageLocators:
         CLIENT_ID_INPUT = (By.XPATH, '//input[@placeholder="Введите Client ID"]')
         API_KEY_INPUT = (By.XPATH, '//input[@placeholder="Введите ключ API"]')
         ERROR_TEXT_SPAN = (By.XPATH, '//span[@role="alert"]')
+        FEED_OR_COMMUNITY_ERROR_DIV = (
+            By.XPATH,
+            '//div[contains(@class, "formBanner_wrapper__")]',
+        )
+        CURRENT_CATALOG_DIV = (By.XPATH, '//div[@data-testid="current-catalog"]')
