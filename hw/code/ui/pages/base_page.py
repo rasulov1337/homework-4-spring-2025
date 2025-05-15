@@ -136,6 +136,9 @@ class BasePage(BasePageFunctionality):
         elem.clear()
         elem.send_keys(value)
 
+    def modal_active(self):
+        return len(self.find_all(self.locators.CURRENT_MODAL)) > 0
+
 
 class PageWithView(BasePageFunctionality):
     url = ""
