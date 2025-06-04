@@ -1,5 +1,4 @@
 pytest
-allure-pytest
 webdriver-manager
 selenium
 faker

@@ -1,6 +1,5 @@
 import time
 
-import allure
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -55,7 +54,6 @@ class BasePage(BasePageFunctionality):
     def find_interactable(self, locator, timeout=None):
         return self.wait(timeout).until(EC.element_to_be_clickable(locator))
 
-    @allure.step("Click")
     def click(self, locator, timeout=None) -> WebElement:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
