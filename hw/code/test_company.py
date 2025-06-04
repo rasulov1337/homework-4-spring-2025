@@ -8,6 +8,8 @@ class TestCompany(BaseCase):
     AD_HEADER = "AD"
     AD_DESC = "DESC"
     ADVERTISED_SITE_TEXT = "Рекламируемый сайт"
+    COUNTRY = "Россия"
+
     def setup_method(self, method):
         self.company_page = CompanyPage(self.driver)
 
@@ -28,7 +30,7 @@ class TestCompany(BaseCase):
         company_page.click_next()
         company_page.check_not_click_next()
         company_page.set_region()
-        assert "Россия" in company_page.driver.page_source
+        assert self.COUNTRY in company_page.driver.page_source
         company_page.click_next()
 
         company_page.set_ad_header(self.AD_HEADER)
