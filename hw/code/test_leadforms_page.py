@@ -3,6 +3,7 @@ from datetime import datetime
 
 from base import BaseCase
 from ui.locators.leadforms_locators import LeadFormsPageLocators
+from ui.pages.leadforms_page import LeadformPage
 
 FILEPATH = os.path.join(os.path.dirname(__file__), 'files/img.png')
 
@@ -17,6 +18,25 @@ COMPANY_ADRESS = 'Москва, улица Арбат, дом 1'
 
 class TestLeadFormsPage(BaseCase):
     locators = LeadFormsPageLocators()
+    def setup_method(self, method):
+        if method.__name__ == "test_find_leadform":
+            self.leadforms_page = LeadformPage(self.driver)
+
+            self.leadforms_page.click_create_leadform_button()
+            self.leadforms_page.fill_leadform_name_field(LEADFORM_NAME)
+            self.leadforms_page.click_download_and_choose_logo_button()
+            self.leadforms_page.fill_company_name_field(COMPANY_NAME)
+            self.leadforms_page.fill_leadform_title_field(LEADFORM_TITLE)
+            self.leadforms_page.fill_leadform_description_field(LEADFORM_DESCRIPTION)
+            self.leadforms_page.click_save_button()
+            self.leadforms_page.click_save_button()
+            self.leadforms_page.click_save_button()
+            self.leadforms_page.fill_leadform_contacts_field(CONTACTS)
+            self.leadforms_page.fill_leadform_legal_adress_field(COMPANY_ADRESS)
+            self.leadforms_page.click_save_button()
+
+    def teardown_method(self, method):
+        self.leadforms_page.delete_all_leadforms()
 
     def test_leadforms_negative_compact_empty(self, leadforms_page):
         leadforms_page.click_create_leadform_button()

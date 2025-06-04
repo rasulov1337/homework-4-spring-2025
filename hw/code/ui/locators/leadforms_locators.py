@@ -126,6 +126,10 @@ class LeadFormsPageLocators(BasePageLocators):
     By.XPATH, f"//*[contains(@class, 'vkuiButton__content') and text()='Добавить контактные данные']")
     ADD_SITE_BUTTON = (By.XPATH, f"//*[contains(@class, 'vkuiTypography') and text()='Добавить сайт']")
 
+    SELECT_ALL_FORMS = (By.XPATH, "(//div[@data-key='checkbox']/input[contains(@class, 'simpleCheckbox_input')][0]")
+    SELECT_ACTION = (By.CSS_SELECTOR, '[data-testid=select-options]')
+    DELETE_ACTION = (By.XPATH, "//div[contains(@class, 'vkuiCustomSelectOption__Children')]")
+
     @staticmethod
     def SELECT_FROM_LEADFORM_LIST(name: str):
         return By.CSS_SELECTOR, f'[data-testid="lead_form_name__{name}"]'

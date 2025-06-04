@@ -65,3 +65,10 @@ class LeadformPage(BasePage):
     def fill_find_leadform_field(self, name: str):
         self.fill_field(LeadFormsPageLocators.INPUT_FIND_LEADFORM, name)
     
+    def delete_all_leadforms(self):
+        try:
+            self.click(self.locators.SELECT_ALL_FORMS)
+            self.click(self.locators.SELECT_ACTIONS_BUTTON)
+            self.click(self.locators.DELETE_ACTION)
+        except Exception as e:
+            print(f"Не удалось удалить лид-формы: {e}")
