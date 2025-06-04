@@ -2,7 +2,6 @@ import time
 from base import BaseCase
 from ui.pages.commerce_center_page import CommerceCenterPage
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver import ActionChains
 
 
 class TestCommerceCenter(BaseCase):
@@ -14,11 +13,9 @@ class TestCommerceCenter(BaseCase):
         training_variants = commerce_center_page.find_all(
             commerce_center_page.locators.TRAINING_OFFER_POPUP_TRAIN_BUTTONS
         )
-        assert (
-            "Создать каталог с подсказками" in training_variants[0].text
-            and "Смотреть видеоурок от экспертов VK" in training_variants[1].text
-            and "Смотреть курс на обучающей платформе" in training_variants[2].text
-        )
+        assert "Создать каталог с подсказками" in training_variants[0].text
+        assert "Смотреть видеоурок от экспертов VK" in training_variants[1].text
+        assert "Смотреть курс на обучающей платформе" in training_variants[2].text
 
     def test_close_modal_education(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.click_undergo_training()
@@ -28,12 +25,11 @@ class TestCommerceCenter(BaseCase):
 
     def test_catalog_sidebar_form(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
-        assert (
-            "Новый каталог"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+
+        sidebar_form_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Новый каталог" in sidebar_form_text
 
     def test_close_catalog_sidebar_form(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
@@ -62,13 +58,15 @@ class TestCommerceCenter(BaseCase):
     def test_catalog_feed_or_community(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
         commerce_center_page.select_position_feed_or_community()
-        assert all(
-            commerce_center_page.find(elem)
-            for elem in [
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.UPDATE_PERIOD_SELECT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.AUTOMATICALLY_DELETE_UTM_LABELS_TEXT,
-            ]
+
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.LINK_TO_FEED_OR_COMMUNITY_INPUT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.UPDATE_PERIOD_SELECT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.AUTOMATICALLY_DELETE_UTM_LABELS_TEXT
         )
 
     def test_catalog_marketplace(self, commerce_center_page: CommerceCenterPage):
@@ -82,14 +80,17 @@ class TestCommerceCenter(BaseCase):
         commerce_center_page.open_catalog_creation_form()
         commerce_center_page.select_position_manually()
 
-        assert all(
-            commerce_center_page.find(elem)
-            for elem in [
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.FEED_CATEGORY_SELECT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.DOWNLOAD_TEMPLATE_OF_FEED_BUTTON,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.FILE_FEED_SELECT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.AUTO_DELETE_UTM_LABELS_CHECKBOX_LABEL,
-            ]
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.FEED_CATEGORY_SELECT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.DOWNLOAD_TEMPLATE_OF_FEED_BUTTON
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.FILE_FEED_SELECT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.AUTO_DELETE_UTM_LABELS_CHECKBOX_LABEL
         )
 
     def test_catalog_marketplace_link_empty(
@@ -98,12 +99,11 @@ class TestCommerceCenter(BaseCase):
         commerce_center_page.open_catalog_creation_form()
         commerce_center_page.select_position_marketplace()
         commerce_center_page.click_sidebar_form_create_catalog()
-        assert (
-            "Нужно заполнить"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Нужно заполнить" in need_to_fill_text
 
     def test_catalog_marketplace_not_link(
         self, commerce_center_page: CommerceCenterPage
@@ -116,12 +116,11 @@ class TestCommerceCenter(BaseCase):
             "not a http",
         )
         commerce_center_page.click_sidebar_form_create_catalog()
-        assert (
-            "Необходимо указать протокол http(s)"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Необходимо указать протокол http(s)" in need_to_fill_text
 
     def test_catalog_marketplace_valid_link(
         self, commerce_center_page: CommerceCenterPage
@@ -137,13 +136,14 @@ class TestCommerceCenter(BaseCase):
             "https://www.ozon.ru/seller/g-point-806219/",  # todo: move into const?
         )
 
-        assert all(
-            commerce_center_page.find(elem)
-            for elem in [
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.CLIENT_ID_INPUT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.API_KEY_INPUT,
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.UPDATE_PERIOD_SELECT,
-            ]
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.CLIENT_ID_INPUT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.API_KEY_INPUT
+        )
+        assert commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.UPDATE_PERIOD_SELECT
         )
 
     def test_catalog_marketplace_empty_api_key(
@@ -167,12 +167,10 @@ class TestCommerceCenter(BaseCase):
 
         commerce_center_page.click_sidebar_form_create_catalog()
 
-        assert (
-            "Нужно заполнить"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Нужно заполнить" in need_to_fill_text
 
     def test_catalog_marketplace_invalid_api_key(
         self, commerce_center_page: CommerceCenterPage
@@ -206,12 +204,10 @@ class TestCommerceCenter(BaseCase):
             )
         )
 
-        assert (
-            "Указан неверный ключ"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Указан неверный ключ" in need_to_fill_text
 
     def test_catalog_manually_empty_file(
         self, commerce_center_page: CommerceCenterPage
@@ -221,12 +217,10 @@ class TestCommerceCenter(BaseCase):
 
         commerce_center_page.click_sidebar_form_create_catalog()
 
-        assert (
-            "Нужно заполнить"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Нужно заполнить" in need_to_fill_text
 
     def test_catalog_feed_empty_link(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
@@ -237,12 +231,10 @@ class TestCommerceCenter(BaseCase):
         )
         commerce_center_page.click_sidebar_form_create_catalog()
 
-        assert (
-            "Нужно заполнить"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Нужно заполнить" in need_to_fill_text
 
     def test_catalog_feed_not_link(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
@@ -254,12 +246,10 @@ class TestCommerceCenter(BaseCase):
         )
         commerce_center_page.click_sidebar_form_create_catalog()
 
-        assert (
-            "Необходимо указать протокол http(s)"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "Необходимо указать протокол http(s)" in need_to_fill_text
 
     def test_catalog_feed_community_without_services(
         self, commerce_center_page: CommerceCenterPage
@@ -279,12 +269,10 @@ class TestCommerceCenter(BaseCase):
             )
         )
 
-        assert (
-            "В этом сообществе недостаточно товаров или услуг"
-            in commerce_center_page.find(
-                commerce_center_page.locators.SIDEBAR_FORM
-            ).text
-        )
+        need_to_fill_text = commerce_center_page.find(
+            commerce_center_page.locators.SIDEBAR_FORM
+        ).text
+        assert "В этом сообществе недостаточно товаров или услуг" in need_to_fill_text
 
     def test_catalog_feed_page_redirect(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.open_catalog_creation_form()
@@ -312,9 +300,7 @@ class TestCommerceCenter(BaseCase):
 
         commerce_center_page.wait().until(EC.url_changes(commerce_center_page.url))
 
-        assert (
-            "Some Name"
-            in commerce_center_page.find(
-                commerce_center_page.locators.CommerceCenterSidebarFormLocators.CURRENT_CATALOG_DIV
-            ).text
-        )
+        sidebar_form_text = commerce_center_page.find(
+            commerce_center_page.locators.CommerceCenterSidebarFormLocators.CURRENT_CATALOG_DIV
+        ).text
+        assert "Some Name" in sidebar_form_text
