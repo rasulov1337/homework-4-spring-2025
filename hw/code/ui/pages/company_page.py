@@ -16,10 +16,6 @@ class CompanyPage(BasePage):
 
     def open_companies_list(self):
         self.click(self.locators.LOGO)
-        # self.became_visible(self.locators.SAVE_DRAFT_COMPANY_MODAL)
-        # self.click(self.locators.SAVE_DRAFT_COMPANY_MODAL_CLOSE_BTN)
-        # self.became_invisible(self.locators.SAVE_DRAFT_COMPANY_MODAL)
-        # self.click(self.locators.LOGO)
         self.click(self.locators.left_menu.COMPANIES_BTN)
 
     def open_companies_drafts(self):
@@ -76,7 +72,6 @@ class CompanyPage(BasePage):
 
     def click_next(self):
         self.click(self.locators.NEXT_BTN)
-        # self.click(self.locators.NEXT_BTN_WITH_ERROR)
 
     def click_logo(self):
         self.click(self.locators.LOGO)
