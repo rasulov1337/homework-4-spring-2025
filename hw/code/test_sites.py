@@ -9,28 +9,31 @@ fake = Faker()
 
 class TestSitesPage(BaseCase):
     WRONG_SITE_LINK_TEXT = "Введите корректный адрес сайта (вида: example.ru)"
+    WRONG_DOMAIN_VALUE = "вронг"
 
     def test_empty_site_link(self, sites_page: SitesPage):
         sites_page.click_add_pixel()
-        sites_page.fill_in(sites_page.locators.SITE_DOMAIN_INPUT, "вронг")
+        sites_page.fill_in(
+            sites_page.locators.SITE_DOMAIN_INPUT, self.WRONG_DOMAIN_VALUE
+        )
         sites_page.clear(sites_page.locators.SITE_DOMAIN_INPUT)
 
-        assert (
-            sites_page.find(sites_page.locators.MODAL_ADD_PIXEL_BUTTON).is_enabled
-            is False
-        )
+        add_pixel_button = sites_page.find(sites_page.locators.MODAL_ADD_PIXEL_BUTTON)
+
+        assert add_pixel_button.is_enabled is False
 
     def test_wrong_site_link(self, sites_page: SitesPage):
         sites_page.click_add_pixel()
-        sites_page.fill_in(sites_page.locators.SITE_DOMAIN_INPUT, "вронг")
+        sites_page.fill_in(
+            sites_page.locators.SITE_DOMAIN_INPUT, self.WRONG_DOMAIN_VALUE
+        )
         sites_page.click_create_pixel()
         sites_page.wait().until(
             EC.visibility_of_element_located(sites_page.locators.ALERT_SPAN)
         )
-        assert (
-            self.WRONG_SITE_LINK_TEXT
-            in sites_page.find(sites_page.locators.CURRENT_MODAL).text
-        )
+
+        current_modal_text = sites_page.find(sites_page.locators.CURRENT_MODAL).text
+        assert self.WRONG_SITE_LINK_TEXT in current_modal_text
 
     def test_valid_site_link(self, sites_page: SitesPage):
         random_site = fake.url()
