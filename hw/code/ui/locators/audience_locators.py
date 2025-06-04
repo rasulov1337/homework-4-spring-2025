@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 from ui.locators.left_menu_locators import LeftMenuLocators
 
 
-class AudiencePageLocators:
-    left_menu = LeftMenuLocators()
+class AudiencePageLocators(LeftMenuLocators):
+
 
     USERS_LIST_TAB_BTN = (By.ID, 'tab_audience.users_list')
     USERS_LIST_MENU_LOCATOR = (By.CSS_SELECTOR, '[data-testid=audience-item-menu]')
@@ -22,10 +22,11 @@ class AudiencePageLocators:
     NEW_USERS_LIST_FILE_INPUT = (By.CSS_SELECTOR, 'input[type=file]')
     SUBMIT_BTN = (By.CSS_SELECTOR, '[data-testid=submit]')
     SUCCESS_NOTIFY = (By.CSS_SELECTOR, '.vkuiSnackbar')
-    USERS_LIST_NAME = (By.CSS_SELECTOR, '.EditableName_name__qWWXi > div')
-    AUDIENCE_SRC = (By.CSS_SELECTOR, 'div.ModalSidebarPage_content__2mBu8 > section > div[role=button]')
-    KEYWORDS_NAME_INPUT = (By.CSS_SELECTOR, '.SelectSourceModal_groupSourceWrapper__wAURc > div > span > input')
-    KEYWORDS_TEXTAREA = (By.CSS_SELECTOR, '.KeyPhrases_textarea__wzycT > textarea')
+    USERS_LIST_NAME = (By.CSS_SELECTOR, 'div.vkuiCustomSelectInput__container > input')
+    ALREADY_EXIST = (By.CSS_SELECTOR, '[data-testid=existsAudience]')
+    KEYWORD = (By.CSS_SELECTOR, '[data-testid=context]')
+    KEYWORDS_NAME_INPUT = (By.CSS_SELECTOR, '[data-testid=name]')
+    KEYWORDS_TEXTAREA = (By.CSS_SELECTOR, '[data-testid=positive-phrases]')
     EXISTING_AUDIENCE_SELECT = (By.CSS_SELECTOR, '.vkuiCustomSelect')
     EXISTING_USERS_LIST_SELECT = (By.CSS_SELECTOR, '.vkuiCustomSelect')
     AUDIENCE_MENU_LOCATOR = (By.CSS_SELECTOR, '[data-testid=audience-item-menu]')

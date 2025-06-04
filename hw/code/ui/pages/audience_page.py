@@ -18,7 +18,7 @@ class AudiencePage(BasePage):
     locators = AudiencePageLocators()
 
     def open_users_list_list(self):
-        self.click(self.locators.left_menu.AUDIENCE_BTN)
+        self.click(self.locators.AUDIENCE_BTN)
         self.click(self.locators.USERS_LIST_TAB_BTN)
 
     def open_users_list_creation(self):
@@ -52,7 +52,7 @@ class AudiencePage(BasePage):
         self.click(self.locators.CREATE_AUDIENCE_FROM_LIST_CHECK)
 
     def open_audiences_list(self):
-        self.click(self.locators.left_menu.AUDIENCE_BTN)
+        self.click(self.locators.AUDIENCE_BTN)
 
     def open_audience_creation(self):
         self.click(self.locators.CREATE_AUDIENCE_BTN, 5000)
@@ -65,11 +65,11 @@ class AudiencePage(BasePage):
 
     def select_audience_source(self, source: AudienceSource):
         if source == AudienceSource.EXISTING:
-            self.find_all(self.locators.AUDIENCE_SRC)[0].click()
+            self.find_all(self.locators.ALREADY_EXIST).click()
         elif source == AudienceSource.USERS_LIST:
-            self.find_all(self.locators.AUDIENCE_SRC)[1].click()
+            self.find_all(self.locators.USER_LIST).click()
         elif source == AudienceSource.KEYWORDS:
-            self.find_all(self.locators.AUDIENCE_SRC)[7].click()
+            self.find_all(self.locators.KEYWORD).click()
 
     def add_existing_users_list(self, users_list_name: str):
         self.click(self.locators.EXISTING_USERS_LIST_SELECT)
