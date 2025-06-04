@@ -8,6 +8,8 @@ fake = Faker()
 
 
 class TestSitesPage(BaseCase):
+    WRONG_SITE_LINK_TEXT = "Введите корректный адрес сайта (вида: example.ru)"
+
     def test_empty_site_link(self, sites_page: SitesPage):
         sites_page.click_add_pixel()
         sites_page.fill_in(sites_page.locators.SITE_DOMAIN_INPUT, "вронг")
@@ -26,7 +28,7 @@ class TestSitesPage(BaseCase):
             EC.visibility_of_element_located(sites_page.locators.ALERT_SPAN)
         )
         assert (
-            "Введите корректный адрес сайта (вида: example.ru)"
+            self.WRONG_SITE_LINK_TEXT
             in sites_page.find(sites_page.locators.CURRENT_MODAL).text
         )
 
