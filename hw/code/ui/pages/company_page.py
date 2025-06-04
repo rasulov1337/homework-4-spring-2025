@@ -97,3 +97,17 @@ class CompanyPage(BasePage):
         self.click(self.locators.NEXT_BTN)
         return
         
+    def clear_all_companies(self):
+        try:
+            self.open_companies_list()
+            self.open_companies_drafts()
+
+            checkbox = self.find(self.locators.SELECT_ALL_CHECKBOX, timeout=3)
+            if checkbox.is_displayed():
+                checkbox.click()
+
+            delete_btn = self.find(self.locators.DELETE_COMPANY_BTN, timeout=3)
+            if delete_btn.is_enabled():
+                delete_btn.click()
+        except Exception:
+            pass

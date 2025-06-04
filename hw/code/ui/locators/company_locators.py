@@ -44,6 +44,9 @@ class CompanyPageLocators:
     ADD_PUBLIC_INPUT = (By.XPATH, '//*[contains(@class, "AddGroupModal_input")]')
     ADD_PUBLIC_BTN = (By.XPATH, '//*[contains(@class, "vkuiModalCardBase")]')
     PRICE_DROPDOWN = (By.CSS_SELECTOR, '[data-testid="autobidding-mode"]')
+    DELETE_COMPANY_BTN = (By.CSS_SELECTOR, '[data-testid="delete-button"]')
+    SELECT_ALL_CHECKBOX = (By.ID, 'checkbox-all')
+
 
     @staticmethod
     def VK_UI_SELECT_ELEM(text):

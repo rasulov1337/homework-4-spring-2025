@@ -8,6 +8,11 @@ class TestCompany(BaseCase):
     AD_HEADER = "AD"
     AD_DESC = "DESC"
     ADVERTISED_SITE_TEXT = "Рекламируемый сайт"
+    def setup_method(self, method):
+        self.company_page = CompanyPage(self.driver)
+
+    def teardown_method(self, method):
+        self.company_page.clear_all_companies()
 
     def test_create_site_company(self, company_page: CompanyPage):
         company_page.close_help_modal()

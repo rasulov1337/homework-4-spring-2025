@@ -4,9 +4,9 @@ from ui.pages.audience_page import AudiencePage, AudienceSource
 
 class TestAudience(BaseCase):
     def setup_method(self, method):
+        self.audience_page = AudiencePage(self.driver)
         if method.__name__ == 'test_audience_from_existing_audience':
-            self.audience_page = AudiencePage(self.driver)
-
+            
             users_list_name = "USER LIST"
             users_list_type = "Email"
             users_list_path = self.config['users_list_path']
@@ -24,10 +24,10 @@ class TestAudience(BaseCase):
             self.audience_page.wait_audience_list_for_load()
 
     def teardown_method(self, method):
-        AudiencePage(self.driver).open_users_list_list()
-        AudiencePage(self.driver).clear_users_lists()
-        AudiencePage(self.driver).open_audiences_list()
-        AudiencePage(self.driver).clear_audiences()
+        self.audience_page.open_users_list_list()
+        self.audience_page.clear_users_lists()
+        self.audience_page.open_audiences_list()
+        self.audience_page.clear_audiences()
 
     def test_create_users_list(self, audience_page: AudiencePage):
         audience_page.open_users_list_list()
