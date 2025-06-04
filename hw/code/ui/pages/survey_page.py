@@ -109,3 +109,19 @@ class SurveyPage(BasePage):
     def get_form_name(self) -> str:
         name = self.find(self.locators.FIRST_LEAD_FORM_NAME)
         return name.text
+
+    def get_error_texts(self) -> dict:
+        return {
+            "name": self.find(self.locators.ERROR_1_TITLE).text.strip(),
+            "company": self.find(self.locators.ERROR_1_COMPANY).text.strip(),
+            "title": self.find(self.locators.ERROR_1_HEADER).text.strip(),
+            "description": self.find(self.locators.ERROR_1_DESCRIPTION).text.strip(),
+        }
+    
+    def delete_all_forms(self, name: str):
+        try:
+            self.click(self.locators.SELECT_ALL_FORMS)
+            self.click(self.locators.SELECT_ACTIONS_BUTTON)
+            self.click(self.locators.DELETE_ACTION)
+        except Exception as e:
+            print(f"Не удалось удалить опросы: {e}")

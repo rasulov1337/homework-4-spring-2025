@@ -7,6 +7,10 @@ FILEPATH = os.path.join(os.path.dirname(__file__), "files/img.png")
 
 
 class TestSurveyPage(BaseCase):
+    def teardown_method(self, method):
+        self.survey_page = SurveyPage(self.driver)
+        self.survey_page.delete_all_forms()
+
     def test_survey_upload_image(self, survey_page: SurveyPage):
         survey_page.click_create_survey_button()
         survey_page.upload_image(FILEPATH)
@@ -14,53 +18,23 @@ class TestSurveyPage(BaseCase):
             FILEPATH
         )
 
-    def test_survey_fill_empty(self, survey_page: SurveyPage):
-        survey_page.click_create_survey_button()
-        survey_page.fill_empty_data()
-        survey_page.click_continue()
-
-        name_error = survey_page.find(survey_page.locators.ERROR_1_TITLE)
-        company_name_error = survey_page.find(survey_page.locators.ERROR_1_COMPANY)
-        title_error = survey_page.find(survey_page.locators.ERROR_1_HEADER)
-        description_error = survey_page.find(survey_page.locators.ERROR_1_DESCRIPTION)
-
-        expected_message = "Нужно заполнить"
-        assert (
-            name_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{name_error.text}'"
-        assert (
-            company_name_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{company_name_error.text}'"
-        assert (
-            title_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{title_error.text}'"
-        assert (
-            description_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{description_error.text}'"
-
-    def test_survey_fill_invalid(self, survey_page):
+    def test_survey_fill_invalid(self, survey_page: SurveyPage):
         survey_page.click_create_survey_button()
         survey_page.fill_data("a" * 256, "a" * 31, "a" * 51, "a" * 351)
         survey_page.click_continue()
 
-        name_error = survey_page.find(survey_page.locators.ERROR_1_TITLE)
-        company_name_error = survey_page.find(survey_page.locators.ERROR_1_COMPANY)
-        title_error = survey_page.find(survey_page.locators.ERROR_1_HEADER)
-        description_error = survey_page.find(survey_page.locators.ERROR_1_DESCRIPTION)
+        errors = survey_page.get_error_texts()
+        for field, actual in errors.items():
+            assert actual == "Сократите текст", f"{field}: expected 'Сократите текст', got '{actual}'"
 
-        expected_message = "Сократите текст"
-        assert (
-            name_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{name_error.text}'"
-        assert (
-            company_name_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{company_name_error.text}'"
-        assert (
-            title_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{title_error.text}'"
-        assert (
-            description_error.text == expected_message
-        ), f"Expected '{expected_message}', got '{description_error.text}'"
+    def test_survey_fill_invalid(self, survey_page: SurveyPage):
+        survey_page.click_create_survey_button()
+        survey_page.fill_data("a" * 256, "a" * 31, "a" * 51, "a" * 351)
+        survey_page.click_continue()
+
+        errors = survey_page.get_error_texts()
+        for field, actual in errors.items():
+            assert actual == "Сократите текст", f"{field}: expected 'Сократите текст', got '{actual}'"
 
     def test_survey_fill_survey(self, survey_page: SurveyPage):
         survey_page.click_create_survey_button()
