@@ -14,3 +14,9 @@ class SitesPage(BasePage):
 
     def click_create_pixel(self):
         self.click(self.locators.MODAL_ADD_PIXEL_BUTTON)
+
+    def click_delete_pixel(self):
+        self.click(self.locators.DELETE_PIXEL_BUTTON)
+
+    def confirm_pixel_delition(self):
+        self.click(self.locators.CONFIRM_DELETE_PIXEL_BUTTON)
