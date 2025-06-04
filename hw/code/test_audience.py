@@ -3,6 +3,12 @@ from ui.pages.audience_page import AudiencePage, AudienceSource
 
 
 class TestAudience(BaseCase):
+    def teardown_method(self, method):
+        AudiencePage(self.driver).open_users_list_list()
+        AudiencePage(self.driver).clear_users_lists()
+        AudiencePage(self.driver).open_audiences_list()
+        AudiencePage(self.driver).clear_audiences()
+
     def test_create_users_list(self, audience_page: AudiencePage):
         audience_page.open_users_list_list()
         audience_page.open_users_list_creation()
@@ -23,8 +29,6 @@ class TestAudience(BaseCase):
         assert len(users_lists) == 1
         assert users_list_name in users_lists
 
-        audience_page.clear_users_lists()
-
     def test_audience_from_uploading_users_list(self, audience_page: AudiencePage):
         audience_page.open_users_list_list()
         audience_page.open_users_list_creation()
@@ -34,19 +38,18 @@ class TestAudience(BaseCase):
         users_list_path = self.config['users_list_path']
 
         audience_page.load_new_users_list(users_list_name, users_list_type, users_list_path)
-        # audience_page.create_audience_from_list()
+        audience_page.create_audience_from_list()
         audience_page.submit_users_list_creation()
         audience_page.wait_for_success_notify()
 
         audience_page.open_audiences_list()
-
         audiences = audience_page.get_audiences()
         assert len(audiences) == 1
         assert f'[auto] Список пользователей / {users_list_name}' in audiences
 
-        audience_page.clear_audiences()
-        audience_page.open_users_list_list()
-        audience_page.clear_users_lists()
+        audience_page.click_created_audience(users_list_name)
+
+        assert audience_page.has_users_list_source(), "Источник 'Список пользователей' не найден в аудитории"
 
     def test_audience_from_keywords(self, audience_page: AudiencePage):
         audience_page.open_audience_creation()

@@ -111,3 +111,18 @@ class AudiencePage(BasePage):
 
     def wait_audience_list_for_load(self):
         self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 5)
+
+    def click_created_audience(self, users_list_name: str):
+        elements = self.find_all(self.locators.AUDIENCE_NAME_LOCATOR)
+        for el in elements:
+            if users_list_name in el.text or f'[auto] Список пользователей / {users_list_name}' in el.text:
+                el.click()
+                return
+        raise AssertionError(f"Не найдена аудитория с именем {users_list_name}")
+
+    def has_users_list_source(self):
+        try:
+            self.find(self.locators.USER_LIST)
+            return True
+        except Exception:
+            return False
