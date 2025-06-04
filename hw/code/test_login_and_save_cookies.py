@@ -8,17 +8,18 @@ import pytest
 
 @pytest.mark.skip("It is intended to be run only once")
 def test_login_and_save_data():
-    driver = webdriver.Chrome()
-    driver.get("https://ads.vk.com/")
+    SITE_URL = "https://ads.vk.com/"
+    TIME_TO_LOGIN = 120
 
-    time_to_login = 120
+    driver = webdriver.Chrome()
+    driver.get(SITE_URL)
 
     print(
         "Войдите в аккаунт вручную. localStorage и куки будут сохранены. У вас есть: {} секунд. Время пошло.".format(
-            time_to_login
+            TIME_TO_LOGIN
         )
     )
-    time.sleep(time_to_login)  # время на ручной вход
+    time.sleep(TIME_TO_LOGIN)  # время на ручной вход
 
     # --- Сохраняем куки ---
     cookies = driver.get_cookies()
