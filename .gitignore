@@ -1,5 +1,4 @@
-.idea/
+__pycache__
+.vscode
 .venv/
-.pytest_cache/
-__pycache__/
-.env
+session_data.json
