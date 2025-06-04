@@ -3,7 +3,7 @@ from ui.locators.survey_locators import SurveyLocators
 
 
 class SurveyPage(BasePage):
-    url = 'https://ads.vk.com/hq/leadads/surveys'
+    url = "https://ads.vk.com/hq/leadads/surveys"
     locators = SurveyLocators()
 
     def click_continue(self):
@@ -21,6 +21,7 @@ class SurveyPage(BasePage):
         company_name_input = self.find(self.locators.COMPANY_INPUT)
         title_input = self.find(self.locators.HEADER_INPUT)
         description_input = self.find(self.locators.DESCRIPTION_INPUT)
+
         name_input.clear()
         company_name_input.clear()
         title_input.clear()
@@ -31,10 +32,9 @@ class SurveyPage(BasePage):
         company_name_input = self.find(self.locators.COMPANY_INPUT)
         title_input = self.find(self.locators.HEADER_INPUT)
         description_input = self.find(self.locators.DESCRIPTION_INPUT)
-        name_input.clear()
-        company_name_input.clear()
-        title_input.clear()
-        description_input.clear()
+
+        self.fill_empty_data()
+
         name_input.send_keys(name)
         company_name_input.send_keys(company)
         title_input.send_keys(title)
@@ -109,4 +109,3 @@ class SurveyPage(BasePage):
     def get_form_name(self) -> str:
         name = self.find(self.locators.FIRST_LEAD_FORM_NAME)
         return name.text
-
