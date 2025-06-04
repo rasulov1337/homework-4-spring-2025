@@ -48,26 +48,6 @@ class MainPage(BasePage):
             )
         )
 
-    # def click_view_all_cases(self):
-    #     for _ in range(3):
-    #         try:
-    #             button = WebDriverWait(self.driver, 3).until(
-    #                 EC.presence_of_element_located(self.locators.VIEW_ALL_CASES_BUTTON)
-    #             )
-    #             self.driver.execute_script(
-    #                 "arguments[0].scrollIntoView({block: 'center', behavior: 'smooth'});",
-    #                 button
-    #             )
-    #             time.sleep(0.5)
-    #
-    #             WebDriverWait(self.driver, 5).until(
-    #                 EC.element_to_be_clickable(self.locators.VIEW_ALL_CASES_BUTTON)
-    #             ).click()
-    #             return
-    #
-    #         except:
-    #             self.driver.execute_script("window.scrollBy(0, 500);")
-    #             time.sleep(0.5)
 
     def page_find_and_click_button(self, button_text, button_index=1, scroll_pause=0.8, max_scroll_attempts=5,
                               scroll_step=400):
