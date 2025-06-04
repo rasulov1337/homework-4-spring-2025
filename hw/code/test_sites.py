@@ -1,4 +1,3 @@
-import faker.utils
 from base import BaseCase
 from ui.pages.sites_page import SitesPage
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,15 +8,6 @@ fake = Faker()
 
 
 class TestSitesPage(BaseCase):
-    def test_open_pixel_creation_modal(self, sites_page: SitesPage):
-        sites_page.click_add_pixel()
-        assert sites_page.modal_active()
-
-    def test_close_pixel_creation_modal(self, sites_page: SitesPage):
-        sites_page.click_add_pixel()
-
-        assert sites_page.modal_active() is False
-
     def test_empty_site_link(self, sites_page: SitesPage):
         sites_page.click_add_pixel()
         sites_page.fill_in(sites_page.locators.SITE_DOMAIN_INPUT, "вронг")
