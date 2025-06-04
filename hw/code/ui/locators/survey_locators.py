@@ -113,3 +113,7 @@ class SurveyLocators(BasePageLocators):
         By.XPATH,
         "(//h5[contains(@data-testid, 'lead_form_name__')])[1]",
     )
+
+    SELECT_ALL_FORMS = (By.XPATH, "(//div[@data-key='checkbox']/input[contains(@class, 'simpleCheckbox_input')][0]")
+    SELECT_ACTIONS_BUTTON = (By.XPATH, f'//input[@placeholder="Действия"]')
+    DELETE_ACTION = (By.XPATH, "//div[contains(@class, 'vkuiCustomSelectOption__Children')]")
