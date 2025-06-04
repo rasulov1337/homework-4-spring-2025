@@ -29,9 +29,6 @@ class CompanyPage(BasePage):
     def open_company_creation(self):
         self.click(self.locators.CREATE_COMPANY_BTN)
 
-    def clear_companies(self):
-        pass
-
     def select_target(self, target: CompanyTarget):
         if target == CompanyTarget.SITE:
             self.click(self.locators.SITE_COMPANY_TARGET)
