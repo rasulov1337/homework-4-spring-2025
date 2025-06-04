@@ -52,11 +52,6 @@ class CompanyPage(BasePage):
     def apply_target(self):
         self.fill(self.locators.COMPANY_BUDGET_INPUT, '1000')
         self.unfocus()
-        # self.click(self.locators.APPLY_COMPANY_TARGET_BTN)
-
-    def apply_groups(self):
-        self.find(self.locators.TARGET_LABEL_LOCATOR)
-        self.click(self.locators.APPLY_COMPANY_GROUP_BTN)
 
     def set_region(self):
         self.find(self.locators.TARGET_LABEL_LOCATOR)

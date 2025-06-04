@@ -17,8 +17,6 @@ class CompanyPageLocators:
 
     CREATE_COMPANY_BTN = (By.CSS_SELECTOR, '[data-testid="create-button"]')
     COMPANY_BUDGET_INPUT = (By.CSS_SELECTOR, '[data-testid="targeting-not-set"]')
-    APPLY_COMPANY_TARGET_BTN = (By.XPATH, '//*[@id="footer"]/div/div/div[2]/div/button')
-    APPLY_COMPANY_GROUP_BTN = (By.XPATH, "//*[contains(@class, 'CreateFooter_footerContentGroup__Hm+Yd')]/div[2]/button[2]")
     NEXT_BTN = (By.XPATH, "//*[contains(@class, 'CreateFooter_footerContentGroup__Hm+Yd')]/div/button")
     NEXT_BTN_WITH_ERROR = (By.XPATH, "//*[contains(@class, 'CreateFooter_footerContentGroup__Hm+Yd')]/div[2]/button")
     SAVE_COMPANY_BTN = (By.XPATH, "//span[contains(text(), 'Сохранить черновик')]")
