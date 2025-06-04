@@ -15,7 +15,7 @@ class AudiencePageLocators(LeftMenuLocators):
     CREATE_AUDIENCE_FROM_LIST_CHECK = (By.XPATH, "//div[contains(text(), 'Создать новую аудиторию после сохранения этого списка')]")
     CREATE_AUDIENCE_BTN = (By.CSS_SELECTOR, '[data-testid=create-audience]')
     AUDIENCE_NAME_INPUT = (By.CSS_SELECTOR, 'span.vkuiFormField > input')
-    AUDIENCE_NAME_LOCATOR = (By.CSS_SELECTOR, '.NameCell_wrapper__hxqrL > h5')
+    AUDIENCE_NAME_LOCATOR = (By.CSS_SELECTOR, '[data-testid=name-limk] > h5')
     ADD_AUDIENCE_SRC_BTN = (By.CSS_SELECTOR, '.vkuiInternalGroup > div > div > button')
     NEW_USERS_LIST_NAME_INPUT = (By.CSS_SELECTOR, '[placeholder="Введите название списка"]')
     NEW_USERS_LIST_TYPE_SELECT = (By.CSS_SELECTOR, '.vkuiCustomSelect')
