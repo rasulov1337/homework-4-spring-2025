@@ -1,6 +1,7 @@
 from base import BaseCase
 from ui.pages.commerce_center_page import CommerceCenterPage
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class TestCommerceCenter(BaseCase):
@@ -22,6 +23,8 @@ class TestCommerceCenter(BaseCase):
     WRONG_API_KEY_TEXT = "Указан неверный ключ"
     WRONG_CLIENT_ID_VALUE = "123"
     WRONG_API_KEY_VALUE = "123"
+
+    catalog_created = False
 
     def test_show_modal_education(self, commerce_center_page: CommerceCenterPage):
         commerce_center_page.click_undergo_training()
@@ -320,3 +323,30 @@ class TestCommerceCenter(BaseCase):
             commerce_center_page.locators.CommerceCenterSidebarFormLocators.CURRENT_CATALOG_DIV
         ).text
         assert self.CATALOG_NAME_TEXT in sidebar_form_text
+        self.catalog_created = True
+
+    def teardown_method(self, method):
+        if not getattr(self, "catalog_created", False):
+            return
+
+        try:
+            commerce_center_page = CommerceCenterPage(self.driver)
+
+            element = self.driver.find_element(
+                *commerce_center_page.locators.CATALOG_HOVER_MENU_BUTTON
+            )
+
+            ActionChains(self.driver).move_to_element(element).pause(3).click(
+                element
+            ).perform()
+            commerce_center_page.click(
+                commerce_center_page.locators.DELETE_CATALOG_BUTTON
+            )
+
+            commerce_center_page.wait().until(
+                EC.presence_of_element_located(
+                    commerce_center_page.locators.DELETION_CONFIRMED_TOASTER
+                )
+            )
+        except Exception as e:
+            print(f"Teardown failed: {e}")

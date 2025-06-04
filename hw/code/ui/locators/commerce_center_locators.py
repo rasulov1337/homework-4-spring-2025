@@ -6,7 +6,7 @@ class CommerceCenterPageLocators:
         By.XPATH,
         '//button[@data-testid="ecomm-onboarding-start"]',
     )
-    CLOSE_POPUP_BUTTON = (By.XPATH, '//div[@aria-label="Закрыть"]')
+    CLOSE_POPUP_BUTTON = (By.XPATH, '//button[span[span[text()="Не сейчас"]]]')
     TRAINING_OFFER_POPUP = (By.XPATH, '//h2[text()="Хотите пройти обучение?"]')
     CURRENT_POPUP = (By.XPATH, '//div[contains(@class, "ModalRoot_overlay")]')
     TRAINING_OFFER_POPUP_TRAIN_BUTTONS = (
@@ -19,6 +19,9 @@ class CommerceCenterPageLocators:
         By.XPATH,
         '//button[@data-testid="catalog-item-menu"]',
     )
+    DELETE_CATALOG_BUTTON = (By.XPATH, '//span[text()="Удалить каталог"]')
+    CONFIRM_DELETION_BUTTON = (By.XPATH, '//button[@data-testid="button-remove"]')
+    DELETION_CONFIRMED_TOASTER = (By.XPATH, '//span//div//div[text()="Каталог удален"]')
 
     class CommerceCenterSidebarFormLocators:
         CANCEL_BUTTON = (By.XPATH, '//button[@data-testid="cancel"]')
