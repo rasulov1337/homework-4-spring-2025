@@ -76,14 +76,18 @@ class TestLeadFormsPage(BaseCase):
         leadforms_page.click_save_button()
 
         assert leadforms_page.is_question_leadform_page_opened()
+        leadforms_page.click_back_button()
+        assert leadforms_page.is_data_save(LEADFORM_NAME, COMPANY_NAME, LEADFORM_TITLE, LEADFORM_DESCRIPTION)
         leadforms_page.click_save_button()
-
+        assert leadforms_page.is_question_leadform_page_opened()
+        leadforms_page.click_save_button()
         assert leadforms_page.is_result_leadform_page_opened()
         leadforms_page.click_save_button()
 
         assert leadforms_page.is_settings_leadform_page_opened()
         leadforms_page.fill_leadform_contacts_field(CONTACTS)
         leadforms_page.fill_leadform_legal_adress_field(COMPANY_ADRESS)
+        assert leadforms_page.is_contacts_save(CONTACTS, COMPANY_ADRESS)
         leadforms_page.click_save_button()
 
         assert leadforms_page.is_leadform_in_list_exists(LEADFORM_NAME)

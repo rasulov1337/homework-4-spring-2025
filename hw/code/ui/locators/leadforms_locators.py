@@ -12,6 +12,7 @@ class LeadFormsPageLocators(BasePageLocators):
     CANCEL_BUTTON = (By.XPATH, "//button[@data-testid='cancel']")
     CONFIRM_DELETE_BUTTON = (By.XPATH, "//*[contains(@class, 'vkuiButton__') and text()='Удалить']")
     CONTINUE_BUTTON = (By.XPATH, "//button[contains(@data-testid, 'submit')]")
+    BACK_BUTTON = (By.XPATH, "//button[contains(@data-testid, 'cancel')]")
     INPUT_NAME_LEAD_FORM = (By.XPATH, '//input[@placeholder="Название лид-формы"]')
     INPUT_NAME_COMPANY = (By.XPATH, '//input[@placeholder="Название компании"]')
     INPUT_TITLE = (By.XPATH, '//input[@placeholder="Текст заголовка"]')
