@@ -26,7 +26,7 @@ class TestCompany(BaseCase):
 
         company_page.set_site_url(self.SITE_URL)
         assert self.SITE_URL in company_page.driver.page_source
-        company_page.apply_target()
+        company_page.apply_target("1000")
 
         company_page.click_next()
         company_page.check_not_click_next()

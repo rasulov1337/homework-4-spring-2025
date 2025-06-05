@@ -46,8 +46,8 @@ class CompanyPage(BasePage):
         except:
             pass
 
-    def apply_target(self):
-        self.fill(self.locators.COMPANY_BUDGET_INPUT, "1000")
+    def apply_target(self, company_budget: str):
+        self.fill(self.locators.COMPANY_BUDGET_INPUT, company_budget)
 
     def set_region(self):
         self.find(self.locators.TARGET_LABEL_LOCATOR)
