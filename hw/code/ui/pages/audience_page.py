@@ -136,14 +136,16 @@ class AudiencePage(BasePage):
             ActionChains(self.driver).move_to_element(menu_btn).perform()
 
             try:
-                delete_btns = self.find_all(self.locators.AUDIENCE_MENU_ITEM_BTN)
+                delete_btns = self.find_all_presence(
+                    self.locators.AUDIENCE_MENU_ITEM_BTN
+                )
                 if len(delete_btns) < 3:
                     break  # перестраховка
 
                 delete_btns[2].click()
 
-                confirm_btns = self.find_all(
-                    self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=1
+                confirm_btns = self.find_all_presence(
+                    self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=3
                 )
                 if len(confirm_btns) < 2:
                     break
