@@ -5,19 +5,21 @@ from base import BaseCase
 from ui.locators.leadforms_locators import LeadFormsPageLocators
 from ui.pages.leadforms_page import LeadformPage
 
-FILEPATH = os.path.join(os.path.dirname(__file__), 'files/img.png')
+FILEPATH = os.path.join(os.path.dirname(__file__), "files/img.png")
 
-LEADFORM_NAME = 'Лид-форма ' + str(datetime.now().second)
-EDIT_LEADFORM_NAME = 'Новая Лид-форма ' + str(datetime.now().second)
-COMPANY_NAME = 'VK'
-LEADFORM_TITLE = 'Заголовок 1'
-LEADFORM_DESCRIPTION = 'Опрос 1'
-CONTACTS = 'Иванов Иван Иваныч'
-COMPANY_ADRESS = 'Москва, улица Арбат, дом 1'
+LEADFORM_NAME = "Лид-форма " + str(datetime.now().second)
+EDIT_LEADFORM_NAME = "Новая Лид-форма " + str(datetime.now().second)
+COMPANY_NAME = "VK"
+LEADFORM_TITLE = "Заголовок 1"
+LEADFORM_DESCRIPTION = "Опрос 1"
+CONTACTS = "Иванов Иван Иваныч"
+COMPANY_ADRESS = "Москва, улица Арбат, дом 1"
 
 
 class TestLeadFormsPage(BaseCase):
     locators = LeadFormsPageLocators()
+    EXPECTED_MESSAGE = "Нужно заполнить"
+
     def setup_method(self, method):
         if method.__name__ == "test_find_leadform":
             self.leadforms_page = LeadformPage(self.driver)
@@ -49,12 +51,19 @@ class TestLeadFormsPage(BaseCase):
         title_empty = leadforms_page.find(self.locators.ERROR_1_HEADING)
         description_empty = leadforms_page.find(self.locators.ERROR_1_DESCRIPTION)
 
-        expected_message = 'Нужно заполнить'
-        assert logo_empty.text == expected_message, f"Expected '{expected_message}', got '{logo_empty.text}'"
-        assert company_name_empty.text == expected_message, f"Expected '{expected_message}', got '{company_name_empty.text}'"
-        assert title_empty.text == expected_message, f"Expected '{expected_message}', got '{title_empty.text}'"
-        assert description_empty.text == expected_message, f"Expected '{expected_message}', got '{description_empty.text}'"
-    
+        assert (
+            logo_empty.text == self.EXPECTED_MESSAGE
+        ), f"Expected '{self.EXPECTED_MESSAGE}', got '{logo_empty.text}'"
+        assert (
+            company_name_empty.text == self.EXPECTED_MESSAGE
+        ), f"Expected '{self.EXPECTED_MESSAGE}', got '{company_name_empty.text}'"
+        assert (
+            title_empty.text == self.EXPECTED_MESSAGE
+        ), f"Expected '{self.EXPECTED_MESSAGE}', got '{title_empty.text}'"
+        assert (
+            description_empty.text == self.EXPECTED_MESSAGE
+        ), f"Expected '{self.EXPECTED_MESSAGE}', got '{description_empty.text}'"
+
     def test_create_leadform(self, leadforms_page):
         leadforms_page.click_create_leadform_button()
         assert leadforms_page.is_leadform_page_opened()
@@ -83,7 +92,6 @@ class TestLeadFormsPage(BaseCase):
         leadforms_page.fill_find_leadform_field(LEADFORM_NAME)
         assert leadforms_page.is_leadform_in_list_exists(LEADFORM_NAME)
 
-        unknown_leadform_name = 'Неизвестная лид-форма'
+        unknown_leadform_name = "Неизвестная лид-форма"
         leadforms_page.fill_find_leadform_field(unknown_leadform_name)
         assert not leadforms_page.is_leadform_in_list_exists(unknown_leadform_name)
-

@@ -8,6 +8,8 @@ FILEPATH = os.path.join(os.path.dirname(__file__), "files/img.png")
 
 
 class TestSurveyPage(BaseCase):
+    FORM_NAME = "1"
+
     def teardown_method(self, method):
         self.survey_page = SurveyPage(self.driver)
         self.survey_page.delete_all_forms()
@@ -58,10 +60,10 @@ class TestSurveyPage(BaseCase):
         survey_page.click_create_survey_button()
         survey_page.click_last_image_name_from_media_library()
 
-        survey_page.fill_data("1", "1", "1", "1")
+        survey_page.fill_data(self.FORM_NAME, "1", "1", "1")
         survey_page.click_continue()
 
-        survey_page.fill_title("1")
+        survey_page.fill_title(self.FORM_NAME)
         survey_page.fill_answers("1", "1")
         survey_page.click_continue()
 
@@ -69,4 +71,4 @@ class TestSurveyPage(BaseCase):
         survey_page.fill_description("1")
         survey_page.click_continue()
 
-        assert survey_page.get_form_name() == "1"
+        assert survey_page.get_form_name() == self.FORM_NAME
