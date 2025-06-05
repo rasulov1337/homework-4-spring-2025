@@ -5,6 +5,7 @@ from selenium.webdriver import Keys, ActionChains
 
 from ui.locators.audience_locators import AudiencePageLocators
 from ui.pages.base_page import BasePage
+from selenium.common.exceptions import TimeoutException
 
 
 class AudienceSource(Enum):
@@ -134,19 +135,22 @@ class AudiencePage(BasePage):
             menu_btn = menu_buttons[0]
             ActionChains(self.driver).move_to_element(menu_btn).perform()
 
-            delete_btns = self.find_all(self.locators.AUDIENCE_MENU_ITEM_BTN)
-            if len(delete_btns) < 3:
-                break  # перестраховка
+            try:
+                delete_btns = self.find_all(self.locators.AUDIENCE_MENU_ITEM_BTN)
+                if len(delete_btns) < 3:
+                    break  # перестраховка
 
-            delete_btns[2].click()
+                delete_btns[2].click()
 
-            confirm_btns = self.find_all(
-                self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=1
-            )
-            if len(confirm_btns) < 2:
-                break
+                confirm_btns = self.find_all(
+                    self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=1
+                )
+                if len(confirm_btns) < 2:
+                    break
 
-            confirm_btns[1].click()
+                confirm_btns[1].click()
+            except TimeoutException:
+                return
 
     def wait_audience_list_for_load(self):
         self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 5)

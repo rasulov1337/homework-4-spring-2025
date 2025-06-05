@@ -97,12 +97,9 @@ def audience_page(driver):
     yield page
 
     # Clean up
-    try:
-        page.clear_audiences()
-        page.open_users_list_list()
-        page.clear_users_lists()
-    except Exception as e:
-        print("Teardown failed:", e)
+    page.clear_audiences()
+    page.open_users_list_list()
+    page.clear_users_lists()
 
 
 @pytest.fixture
