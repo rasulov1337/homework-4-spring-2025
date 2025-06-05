@@ -1,5 +1,7 @@
 from .base_page import BasePage
 from ui.locators.commerce_center_locators import CommerceCenterPageLocators
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class CommerceCenterPage(BasePage):
@@ -39,4 +41,16 @@ class CommerceCenterPage(BasePage):
     def click_sidebar_form_create_catalog(self):
         self.click(
             self.locators.CommerceCenterSidebarFormLocators.CREATE_CATALOG_BUTTON
+        )
+
+    def delete_catalog(self):
+        element = self.driver.find_element(*self.locators.CATALOG_HOVER_MENU_BUTTON)
+
+        ActionChains(self.driver).move_to_element(element).pause(3).click(
+            element
+        ).perform()
+        self.click(self.locators.DELETE_CATALOG_BUTTON)
+
+        self.wait().until(
+            EC.presence_of_element_located(self.locators.DELETION_CONFIRMED_TOASTER)
         )

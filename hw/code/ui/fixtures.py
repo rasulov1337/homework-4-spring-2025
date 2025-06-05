@@ -115,7 +115,9 @@ def commerce_center_page(driver):
     page = CommerceCenterPage(driver=driver)
     if page.popup_active():
         page.close_popup()
-    return page
+    yield page
+
+    page.delete_catalog()
 
 
 @pytest.fixture
