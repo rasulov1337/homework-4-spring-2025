@@ -3,7 +3,8 @@ from ui.pages.audience_page import AudiencePage, AudienceSource
 
 
 class TestAudience(BaseCase):
-    ALREADY_CREATED_AUDITORY = "Уже созданная аудитория"
+    USERS_LIST_NAME = "USER LIST"
+    ALREADY_CREATED_AUDITORY = f"[auto] Список пользователей / {USERS_LIST_NAME}"
     AUDIENCE_NAME = "AUDIENCE"
     EXISTING_AUDIENCE = "EXISTING_AUDIENCE"
 
@@ -85,13 +86,14 @@ class TestAudience(BaseCase):
     def test_audience_from_existing_audience(
         self, audience_page: AudiencePage, setup_existing_audience
     ):
+
         audience_page.open_audience_creation()
         audience_page.set_audience_name(self.AUDIENCE_NAME)
         audience_page.open_sources_list()
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
-        audience_page.add_existing_audience(self.EXISTING_AUDIENCE)
-        assert self.EXISTING_AUDIENCE in audience_page.driver.page_source
+        audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY)
+        assert self.ALREADY_CREATED_AUDITORY in audience_page.driver.page_source
         audience_page.submit_audience_source()
         assert self.ALREADY_CREATED_AUDITORY in audience_page.driver.page_source
         audience_page.submit_audience_creation()

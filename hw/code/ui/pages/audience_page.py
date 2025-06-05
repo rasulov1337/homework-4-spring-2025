@@ -77,11 +77,11 @@ class AudiencePage(BasePage):
 
     def select_audience_source(self, source: AudienceSource):
         if source == AudienceSource.EXISTING:
-            self.find_all(self.locators.ALREADY_EXIST).click()
+            self.find(self.locators.ALREADY_EXIST).click()
         elif source == AudienceSource.USERS_LIST:
-            self.find_all(self.locators.USER_LIST).click()
+            self.find(self.locators.USER_LIST).click()
         elif source == AudienceSource.KEYWORDS:
-            self.find_all(self.locators.KEYWORD).click()
+            self.find(self.locators.KEYWORD).click()
 
     def add_existing_users_list(self, users_list_name: str):
         self.click(self.locators.EXISTING_USERS_LIST_SELECT)
@@ -124,13 +124,29 @@ class AudiencePage(BasePage):
             self.find_all(self.locators.USERS_LIST_POPUP_ITEM_BTN, 1)[1].click()
 
     def clear_audiences(self):
-        for menu_btn in self.find_all_presence(
-            self.locators.AUDIENCE_MENU_LOCATOR, 2000
-        ):
-            hover = ActionChains(self.driver).move_to_element(menu_btn)
-            hover.perform()
-            self.find_all(self.locators.AUDIENCE_MENU_ITEM_BTN)[2].click()
-            self.find_all(self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, 1)[1].click()
+        while True:
+            menu_buttons = self.find_all_presence(
+                self.locators.AUDIENCE_MENU_LOCATOR, 4000
+            )
+            if not menu_buttons:
+                break
+
+            menu_btn = menu_buttons[0]
+            ActionChains(self.driver).move_to_element(menu_btn).perform()
+
+            delete_btns = self.find_all(self.locators.AUDIENCE_MENU_ITEM_BTN)
+            if len(delete_btns) < 3:
+                break  # перестраховка
+
+            delete_btns[2].click()
+
+            confirm_btns = self.find_all(
+                self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=1
+            )
+            if len(confirm_btns) < 2:
+                break
+
+            confirm_btns[1].click()
 
     def wait_audience_list_for_load(self):
         self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 5)
