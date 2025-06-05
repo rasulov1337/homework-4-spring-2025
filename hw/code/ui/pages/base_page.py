@@ -95,11 +95,6 @@ class BasePage(BasePageFunctionality):
         assert len(handles) > 1
         self.driver.switch_to.window(handles[1])
 
-    def scroll_and_click(self, locator, timeout=None) -> WebElement:
-        elem = self.wait(timeout).until(EC.presence_of_element_located(locator))
-        ActionChains(self.driver).move_to_element(elem).click(elem).perform()
-        return elem
-
     def became_visible(self, locator, timeout=None):
         try:
             self.wait(timeout).until(EC.visibility_of_element_located(locator))
