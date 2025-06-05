@@ -1,5 +1,4 @@
 import time
-from functools import wraps
 
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
@@ -38,7 +37,9 @@ class BasePage:
     def wait(self, timeout=BASIC_TIMEOUT) -> WebDriverWait:
         return WebDriverWait(self.driver, timeout=timeout)
 
-    def find(self, locator, timeout=BASIC_TIMEOUT, until=EC.presence_of_element_located) -> WebElement:
+    def find(
+        self, locator, timeout=BASIC_TIMEOUT, until=EC.presence_of_element_located
+    ) -> WebElement:
         return self.wait(timeout).until(until(locator))
 
     def find_visibility(self, locator, timeout=BASIC_TIMEOUT) -> WebElement:
@@ -56,7 +57,13 @@ class BasePage:
     def find_invisible(self, locator, timeout=BASIC_TIMEOUT) -> WebElement:
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
 
-    def find_child(self, parent, child_locator, timeout=BASIC_TIMEOUT, until=EC.presence_of_element_located):
+    def find_child(
+        self,
+        parent,
+        child_locator,
+        timeout=BASIC_TIMEOUT,
+        until=EC.presence_of_element_located,
+    ):
         return WebDriverWait(parent, timeout).until(until(child_locator))
 
     def clear(self, locator, timeout=BASIC_TIMEOUT) -> WebElement:
