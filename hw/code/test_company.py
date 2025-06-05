@@ -22,22 +22,23 @@ class TestCompany(BaseCase):
         company_page.close_help_modal()
         company_page.open_company_creation()
         company_page.select_target(CompanyTarget.SITE)
-        assert self.ADVERTISED_SITE_TEXT in company_page.driver.page_source
+        assert company_page.is_site_section_opened(), "Раздел 'Рекламируемый сайт' не открылся"
 
         company_page.set_site_url(self.SITE_URL)
-        assert self.SITE_URL in company_page.driver.page_source
+        actual_url = company_page.get_site_url_value()
+        assert actual_url == self.SITE_URL, f"URL не совпадает: ожидалось {self.SITE_URL}, получено {actual_url}"
         company_page.apply_target("1000")
 
         company_page.click_next()
         company_page.check_not_click_next()
         company_page.set_region()
-        assert self.COUNTRY in company_page.driver.page_source
+        assert company_page.is_region_selected(self.COUNTRY), f"Страна '{self.COUNTRY}' не выбрана"
         company_page.click_next()
 
         company_page.set_ad_header(self.AD_HEADER)
         company_page.set_ad_short_desc(self.AD_DESC)
-        assert self.AD_HEADER in company_page.driver.page_source
-        assert self.AD_DESC in company_page.driver.page_source
+        assert company_page.get_ad_header_value() == self.AD_HEADER, "Заголовок не совпадает"
+        assert company_page.get_ad_short_desc_value() == self.AD_DESC, "Описание не совпадает"
 
         company_page.save_company()
 
@@ -45,4 +46,4 @@ class TestCompany(BaseCase):
         company_page.open_companies_drafts()
         companies_drafts = company_page.get_companies_drafts()
 
-        assert len(companies_drafts) == 1
+        assert len(companies_drafts) == 1, "Ожидался 1 черновик кампании"

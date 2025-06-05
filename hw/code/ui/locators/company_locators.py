@@ -44,6 +44,12 @@ class CompanyPageLocators:
     PRICE_DROPDOWN = (By.CSS_SELECTOR, '[data-testid="autobidding-mode"]')
     DELETE_COMPANY_BTN = (By.CSS_SELECTOR, '[data-testid="delete-button"]')
     SELECT_ALL_CHECKBOX = (By.ID, 'checkbox-all')
+    SITE_SECTION_LABEL = (By.XPATH, "//span[contains(@class, 'FormItem_topText') and text()='Рекламируемый сайт']")
+    SELECTED_REGION_LABEL = (By.XPATH, "//span[contains(@class, 'RegionsList_label') and text()='Россия']")
+
+    @staticmethod
+    def SELECTED_REGION_LABEL_BY_NAME(region_name: str):
+        return (By.XPATH, f"//span[contains(@class, 'RegionsList_label') and text()='{region_name}']")
 
 
     @staticmethod

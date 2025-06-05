@@ -87,6 +87,21 @@ class CompanyPage(BasePage):
         self.click(self.locators.NEXT_BTN)
         return
 
+    def is_site_section_opened(self) -> bool:
+        return self.is_visible(self.locators.SITE_SECTION_LABEL)
+    
+    def get_site_url_value(self) -> str:
+        return self.get_value(self.locators.SITE_URL_INPUT)
+
+    def get_ad_header_value(self) -> str:
+        return self.get_value(self.locators.AD_HEADER_INPUT)
+
+    def get_ad_short_desc_value(self) -> str:
+        return self.get_value(self.locators.AD_SHORT_DECS_TEXTAREA)
+
+    def is_region_selected(self, country_name: str) -> bool:
+        return self.is_visible(self.locators.SELECTED_REGION_LABEL_BY_NAME(country_name))
+
     def clear_all_companies(self):
         try:
             self.open_companies_list()
