@@ -40,7 +40,6 @@ class TestAudience(BaseCase):
         audience_page.load_new_users_list(
             users_list_name, users_list_type, users_list_path
         )
-        audience_page.create_audience_from_list()
         audience_page.submit_users_list_creation()
         audience_page.wait_for_success_notify()
 
@@ -54,6 +53,9 @@ class TestAudience(BaseCase):
         assert (
             audience_page.has_users_list_source()
         ), "Источник 'Список пользователей' не найден в аудитории"
+
+        audience_page.close_alert_if_shown()
+        audience_page.close_modal()
 
     def test_audience_from_keywords(self, audience_page: AudiencePage):
         audience_page.open_audience_creation()

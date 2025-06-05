@@ -99,14 +99,14 @@ def setup_existing_audience(driver, config):
 
 @pytest.fixture()
 def audience_page(driver):
+    driver.get(AudiencePage.url)
     page = AudiencePage(driver)
-    driver.get(page.url)
     yield page
 
+    # Clean up
+    page.clear_audiences()
     page.open_users_list_list()
     page.clear_users_lists()
-    page.open_audiences_list()
-    page.clear_audiences()
 
 
 @pytest.fixture
