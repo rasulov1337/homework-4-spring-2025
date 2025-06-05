@@ -1,11 +1,3 @@
-import time
-
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-from ..pages.overview_page import OverviewPage
 from ..locators.main_page import MainPageLocators
 from ..pages.base_page import BasePage
 

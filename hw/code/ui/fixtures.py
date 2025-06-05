@@ -17,11 +17,8 @@ from ui.pages.audience_page import AudiencePage
 from ui.pages.main_page import MainPage
 from ui.pages.sites_page import SitesPage
 from ui.pages.mobile_apps_page import MobileAppsPage
-# from ui.pages.settings_page import SettingsPage
-# from ui.pages.commerce_page import CommercePage
 from ui.pages.leadforms_page import LeadformPage
 from ui.pages.survey_page import SurveyPage
-# from ui.pages.sites_page import SitePage
 
 
 SESSION_FILE = os.path.join(
@@ -109,15 +106,11 @@ def company_page(driver):
 def auth_page(driver):
     return AuthPage(driver=driver)
 
+
 @pytest.fixture()
 def budget_page(driver):
     driver.get(BudgetPage.url)
     return BudgetPage(driver)
-
-@pytest.fixture
-def site_page(driver):
-    driver.get(SitePage.url)
-    return SitePage(driver=driver)
 
 
 @pytest.fixture

@@ -1,7 +1,5 @@
 from .base_page import BasePage
 from ui.locators.commerce_center_locators import CommerceCenterPageLocators
-from selenium.webdriver import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 class CommerceCenterPage(BasePage):

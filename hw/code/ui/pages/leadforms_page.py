@@ -1,10 +1,11 @@
 from ui.pages.base_page import BasePage
 from ui.locators.leadforms_locators import LeadFormsPageLocators
-from selenium.webdriver.common.action_chains import ActionChains
+
 
 class LeadformPage(BasePage):
-    url = 'https://ads.vk.com/hq/leadads/leadforms'
+    url = "https://ads.vk.com/hq/leadads/leadforms"
     locators = LeadFormsPageLocators()
+
     def click_create_leadform_button(self):
         self.click(self.locators.CREATE_LEADFORM_BUTTON)
 
@@ -17,7 +18,7 @@ class LeadformPage(BasePage):
         company_name_input.clear()
         title_input.clear()
         description_input.clear()
-    
+
     def click_continue(self):
         self.click(self.locators.CONTINUE_BUTTON)
 
@@ -43,13 +44,13 @@ class LeadformPage(BasePage):
 
     def click_save_button(self):
         self.click(LeadFormsPageLocators.CONTINUE_BUTTON)
-    
+
     def is_question_leadform_page_opened(self) -> bool:
         return self.is_visible(LeadFormsPageLocators.ADD_CONTACTS_BUTTON)
 
     def is_result_leadform_page_opened(self) -> bool:
-        return self.is_visible(LeadFormsPageLocators.ADD_SITE_BUTTON)\
-        
+        return self.is_visible(LeadFormsPageLocators.ADD_SITE_BUTTON)
+
     def is_settings_leadform_page_opened(self) -> bool:
         return self.is_visible(LeadFormsPageLocators.CONTACTS)
 
@@ -61,10 +62,10 @@ class LeadformPage(BasePage):
 
     def is_leadform_in_list_exists(self, name: str) -> bool:
         return self.is_visible(LeadFormsPageLocators.SELECT_FROM_LEADFORM_LIST(name))
-    
+
     def fill_find_leadform_field(self, name: str):
         self.fill_field(LeadFormsPageLocators.INPUT_FIND_LEADFORM, name)
-    
+
     def delete_all_leadforms(self):
         try:
             self.click(self.locators.SELECT_ALL_FORMS)
