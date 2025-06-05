@@ -45,6 +45,9 @@ class LeadformPage(BasePage):
     def click_save_button(self):
         self.click(LeadFormsPageLocators.CONTINUE_BUTTON)
 
+    def clicl_back_button(self):
+        self.click(LeadFormsPageLocators.BACK_BUTTON)
+
     def is_question_leadform_page_opened(self) -> bool:
         return self.is_visible(LeadFormsPageLocators.ADD_CONTACTS_BUTTON)
 
@@ -73,3 +76,21 @@ class LeadformPage(BasePage):
             self.click(self.locators.DELETE_ACTION)
         except Exception as e:
             print(f"Не удалось удалить лид-формы: {e}")
+
+    def is_data_save(self, name, company, title, description) -> bool:
+        if self.get_value(self.locators.INPUT_NAME_LEAD_FORM) != name:
+            return False
+        if self.get_value(self.locators.INPUT_NAME_COMPANY) != company:
+            return False
+        if self.get_value(self.locators.INPUT_TITLE) != title:
+            return False
+        if self.get_value(self.locators.INPUT_DESCRIPTION) != description:
+            return False
+        return True
+    
+    def is_constacts_save(self, contacts, adress) -> bool:
+        if self.get_value(self.locators.CONTACTS) != contacts:
+            return False
+        if self.get_value(self.locators.INPUT_LEGAL_ADRESS_COMPANY) != adress:
+            return False
+        return True
