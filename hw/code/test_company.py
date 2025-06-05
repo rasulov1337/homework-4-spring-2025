@@ -10,11 +10,13 @@ class TestCompany(BaseCase):
     ADVERTISED_SITE_TEXT = "Рекламируемый сайт"
     COUNTRY = "Россия"
 
-    def setup_method(self, method):
-        self.company_page = CompanyPage(self.driver)
-
     def teardown_method(self, method):
-        self.company_page.clear_all_companies()
+        try:
+            self.company_page = CompanyPage(self.driver)
+
+            self.company_page.clear_all_companies()
+        except Exception as e:
+            print("Exception occured: ", e)
 
     def test_create_site_company(self, company_page: CompanyPage):
         company_page.close_help_modal()
@@ -24,7 +26,6 @@ class TestCompany(BaseCase):
 
         company_page.set_site_url(self.SITE_URL)
         assert self.SITE_URL in company_page.driver.page_source
-        company_page.unfocus()
         company_page.apply_target()
 
         company_page.click_next()

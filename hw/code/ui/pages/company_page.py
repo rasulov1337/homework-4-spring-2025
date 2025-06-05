@@ -1,18 +1,18 @@
 from .base_page import BasePage
 from ui.locators.company_locators import CompanyPageLocators
 from enum import Enum
-import time
+
 
 class CompanyTarget(Enum):
-    SITE = 'site'
-    CATALOG = 'ecomm'
-    PUBLIC = 'social'
-    ODKL = 'odkl'
+    SITE = "site"
+    CATALOG = "ecomm"
+    PUBLIC = "social"
+    ODKL = "odkl"
 
 
 class CompanyPage(BasePage):
     locators = CompanyPageLocators()
-    url = 'https://ads.vk.com/hq/dashboard'
+    url = "https://ads.vk.com/hq/dashboard"
 
     def open_companies_list(self):
         self.click(self.locators.LOGO)
@@ -23,8 +23,12 @@ class CompanyPage(BasePage):
         self.click(self.locators.COMPANIES_DRAFTS)
 
     def get_companies_drafts(self):
-        return list(map(lambda company_draft_name_element: company_draft_name_element.text,
-                   self.find_all(self.locators.COMPANY_DRAFT_NAME)))
+        return list(
+            map(
+                lambda company_draft_name_element: company_draft_name_element.text,
+                self.find_all(self.locators.COMPANY_DRAFT_NAME),
+            )
+        )
 
     def open_company_creation(self):
         self.click(self.locators.CREATE_COMPANY_BTN)
@@ -43,8 +47,7 @@ class CompanyPage(BasePage):
             pass
 
     def apply_target(self):
-        self.fill(self.locators.COMPANY_BUDGET_INPUT, '1000')
-        self.unfocus()
+        self.fill(self.locators.COMPANY_BUDGET_INPUT, "1000")
 
     def set_region(self):
         self.find(self.locators.TARGET_LABEL_LOCATOR)
@@ -83,7 +86,7 @@ class CompanyPage(BasePage):
         self.became_invisible(self.locators.ERROR_LOCATOR, 5)
         self.click(self.locators.NEXT_BTN)
         return
-        
+
     def clear_all_companies(self):
         try:
             self.open_companies_list()

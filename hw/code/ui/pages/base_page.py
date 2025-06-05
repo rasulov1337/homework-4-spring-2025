@@ -87,9 +87,6 @@ class BasePage(BasePageFunctionality):
         except TimeoutException:
             return False
 
-    def unfocus(self):
-        self.driver.execute_script("document.activeElement.blur()")
-
     def go_to_new_tab(self):
         handles = self.driver.window_handles
         assert len(handles) > 1
