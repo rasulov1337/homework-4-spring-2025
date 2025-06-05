@@ -11,9 +11,9 @@ import os
 from ui.pages.commerce_center_page import CommerceCenterPage
 from ui.pages.auth_page import AuthPage
 from ui.pages.budget_page import BudgetPage
+from ui.pages.audience_page import AudiencePage, AudienceSource
 
 from ui.pages.company_page import CompanyPage
-from ui.pages.audience_page import AudiencePage
 from ui.pages.main_page import MainPage
 from ui.pages.sites_page import SitesPage
 from ui.pages.mobile_apps_page import MobileAppsPage
@@ -69,10 +69,44 @@ def main_page(driver):
     return MainPage(driver)
 
 
+@pytest.fixture
+def setup_existing_audience(driver, config):
+    page = AudiencePage(driver)
+    driver.get(page.url)
+
+    users_list_name = "USER LIST"
+    users_list_type = "Email"
+    users_list_path = config["users_list_path"]
+
+    page.open_audience_creation()
+    page.set_audience_name("EXISTING_AUDIENCE")
+    page.open_sources_list()
+    page.select_audience_source(AudienceSource.USERS_LIST)
+    page.click_upload_new_users_list()
+    page.load_new_users_list(users_list_name, users_list_type, users_list_path)
+    page.submit_audience_source()
+    page.wait_for_success_notify()
+    page.submit_audience_creation()
+    page.wait_audience_list_for_load()
+
+    yield
+
+    page.open_users_list_list()
+    page.clear_users_lists()
+    page.open_audiences_list()
+    page.clear_audiences()
+
+
 @pytest.fixture()
 def audience_page(driver):
-    driver.get(AudiencePage.url)
-    return AudiencePage(driver)
+    page = AudiencePage(driver)
+    driver.get(page.url)
+    yield page
+
+    page.open_users_list_list()
+    page.clear_users_lists()
+    page.open_audiences_list()
+    page.clear_audiences()
 
 
 @pytest.fixture
