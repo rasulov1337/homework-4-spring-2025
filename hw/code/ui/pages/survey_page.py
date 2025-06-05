@@ -101,7 +101,6 @@ class SurveyPage(BasePage):
         self.click(self.locators.ARCHIVE_ACCEPT_BUTTON)
 
     def click_last_image_name_from_media_library(self):
-        self.click(self.locators.LOAD_IMAGE_BUTTON)
         self.hover(self.locators.UPLOADED_IMAGE_ITEM)
         self.click(self.locators.UPLOADED_IMAGE_NAME)
         self.became_invisible(self.locators.UPLOAD_IMAGE_MODAL)

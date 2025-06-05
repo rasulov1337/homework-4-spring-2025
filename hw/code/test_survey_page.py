@@ -14,13 +14,6 @@ class TestSurveyPage(BaseCase):
         self.survey_page = SurveyPage(self.driver)
         self.survey_page.delete_all_forms()
 
-    def test_survey_upload_image(self, survey_page: SurveyPage):
-        survey_page.click_create_survey_button()
-        survey_page.upload_image(FILEPATH)
-        assert survey_page.get_last_image_name_from_media_library() == os.path.basename(
-            FILEPATH
-        )
-
     @pytest.mark.parametrize(
         "name, company_name, title, description, expected_message",
         [
@@ -58,6 +51,11 @@ class TestSurveyPage(BaseCase):
 
     def test_survey_fill_survey(self, survey_page: SurveyPage):
         survey_page.click_create_survey_button()
+        survey_page.upload_image(FILEPATH)
+        assert survey_page.get_last_image_name_from_media_library() == os.path.basename(
+            FILEPATH
+        )
+        
         survey_page.click_last_image_name_from_media_library()
 
         survey_page.fill_data(self.FORM_NAME, "1", "1", "1")
