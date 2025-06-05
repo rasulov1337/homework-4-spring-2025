@@ -87,17 +87,6 @@ class BasePage(BasePageFunctionality):
         except TimeoutException:
             return False
 
-    def scroll_click(self, locator, timeout=5) -> WebElement:
-        self.find(locator, timeout=timeout)
-        self.wait(timeout).until(EC.visibility_of_element_located(locator))
-        elem: WebElement = self.wait(timeout).until(EC.element_to_be_clickable(locator))
-
-        self.wait(timeout).until(element_in_viewport(locator))
-
-        elem.click()
-
-        return elem
-
     def unfocus(self):
         self.driver.execute_script("document.activeElement.blur()")
 
@@ -148,46 +137,3 @@ class PageWithView(BasePageFunctionality):
     def close_view(self, button_close_locator, sign_opening_locator):
         self.click(button_close_locator)
         self.find(sign_opening_locator, until_EC=EC.invisibility_of_element_located)
-
-
-# add_open_view add method open_view() to button by locator
-def add_open_view(sign_opening_locator):
-    def add_open_view_decorator(elem_getter):
-        @wraps(elem_getter)
-        def functionality(self, *args, **kwargs):
-            openable_elem_result = elem_getter(self, *args, **kwargs)
-
-            def open_view():
-                return self.open_view(
-                    openable_elem_result, sign_opening_locator=sign_opening_locator
-                )
-
-            openable_elem_result.open_view = open_view
-
-            return openable_elem_result
-
-        return functionality
-
-    return add_open_view_decorator
-
-
-class element_in_viewport(object):
-    def __init__(self, locator: tuple[str, str]):
-        self.locator = locator
-
-    def __call__(self, driver):
-        script = """
-                    var elem = arguments[0],
-                    box = elem.getBoundingClientRect(),
-                    cx = box.left + box.width / 2,
-                    cy = box.top + box.height / 2,
-                    e = document.elementFromPoint(cx, cy);
-                    for (; e; e = e.parentElement) {
-                    if (e === elem)
-                      return true;
-                    }
-                    return false;
-                """
-
-        elem = driver.find_element(*self.locator)
-        return driver.execute_script(script, elem)
