@@ -58,12 +58,12 @@ class AudiencePageLocators(LeftMenuLocators):
     def EXISTING_AUDIENCE_SELECT_ITEM(audience_name):
         return (
             By.XPATH,
-            f"//*[contains(@class, 'Segment_option__79RaG')][text()='{audience_name}']",
+            f"//*[contains(@class, 'Segment_option')][text()='{audience_name}']",
         )
 
     @staticmethod
     def EXISTING_USERS_LIST_SELECT_ITEM(users_list_name):
         return (
             By.XPATH,
-            f"//*[contains(@class, 'UsersListSelect_option__gUna1')][text()='{users_list_name}']",
+            f"//*[contains(@class, 'UsersListSelect_option')][text()='{users_list_name}']",
         )
