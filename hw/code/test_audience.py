@@ -55,9 +55,6 @@ class TestAudience(BaseCase):
             audience_page.has_users_list_source()
         ), "Источник 'Список пользователей' не найден в аудитории"
 
-        audience_page.close_alert_if_shown()
-        audience_page.close_modal()
-
     def test_audience_from_keywords(self, audience_page: AudiencePage):
         audience_page.open_audience_creation()
 

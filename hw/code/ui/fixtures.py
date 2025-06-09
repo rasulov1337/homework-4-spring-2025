@@ -97,6 +97,8 @@ def audience_page(driver):
     yield page
 
     # Clean up
+    page.close_modal()
+
     page.clear_audiences()
     page.open_users_list_list()
     page.clear_users_lists()
