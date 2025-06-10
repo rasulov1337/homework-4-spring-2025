@@ -188,3 +188,9 @@ class AudiencePage(BasePage):
     
     def is_keyword_list_named(self, name: str) -> bool:
         return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None
+    
+    def is_existing_audience_selected(self, name: str) -> bool:
+        return self.is_visible(self.locators.EXISTING_AUDIENCE_SELECT(name))
+
+    def is_existing_audience_confirmed(self, name: str) -> bool:
+        return self.is_visible(self.locators.EXISTING_AUDIENCE_CONFIRMED(name))

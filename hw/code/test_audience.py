@@ -89,9 +89,11 @@ class TestAudience(BaseCase):
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
         audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY)
-        assert self.ALREADY_CREATED_AUDITORY in audience_page.driver.page_source
+        assert audience_page.is_existing_audience_selected(self.ALREADY_CREATED_AUDITORY), \
+            f"Не отображается выбранная аудитория: {self.ALREADY_CREATED_AUDITORY}"
         audience_page.submit_audience_source()
-        assert self.ALREADY_CREATED_AUDITORY in audience_page.driver.page_source
+        assert audience_page.is_existing_audience_confirmed(self.ALREADY_CREATED_AUDITORY), \
+            f"Подтверждение аудитории не отображается: {self.ALREADY_CREATED_AUDITORY}"
         audience_page.submit_audience_creation()
 
         audience_page.wait_audience_list_for_load()
