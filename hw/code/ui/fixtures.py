@@ -74,39 +74,34 @@ def setup_existing_audience(driver, config):
     page = AudiencePage(driver)
     driver.get(page.url)
 
+    page.open_users_list_list()
+    page.open_users_list_creation()
+
     users_list_name = "USER LIST"
     users_list_type = "Email"
     users_list_path = config["users_list_path"]
 
-    page.open_audience_creation()
-    page.set_audience_name("EXISTING_AUDIENCE")
-    page.open_sources_list()
-    page.select_audience_source(AudienceSource.USERS_LIST)
-    page.click_upload_new_users_list()
     page.load_new_users_list(users_list_name, users_list_type, users_list_path)
-    page.submit_audience_source()
+    page.submit_users_list_creation()
     page.wait_for_success_notify()
-    page.submit_audience_creation()
-    page.wait_audience_list_for_load()
 
-    yield
-
-    page.open_users_list_list()
-    page.clear_users_lists()
     page.open_audiences_list()
-    page.clear_audiences()
+
+    yield page
 
 
 @pytest.fixture()
 def audience_page(driver):
+    driver.get(AudiencePage.url)
     page = AudiencePage(driver)
-    driver.get(page.url)
     yield page
 
+    # Clean up
+    page.close_modal()
+
+    page.clear_audiences()
     page.open_users_list_list()
     page.clear_users_lists()
-    page.open_audiences_list()
-    page.clear_audiences()
 
 
 @pytest.fixture
