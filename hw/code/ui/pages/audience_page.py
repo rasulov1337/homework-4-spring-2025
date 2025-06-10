@@ -185,3 +185,6 @@ class AudiencePage(BasePage):
         elements = self.find_all(self.locators.KEYWORDS_TEXTAREA)
         texts = [el.text.strip() for el in elements]
         return all(k.strip() in texts for k in expected_keywords)
+    
+    def is_keyword_list_named(self, name: str) -> bool:
+        return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None

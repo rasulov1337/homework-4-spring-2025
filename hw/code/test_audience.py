@@ -72,7 +72,7 @@ class TestAudience(BaseCase):
         assert audience_page.are_keywords_displayed(keywords), "Не все ключевые слова отображаются в списке"
 
         audience_page.submit_audience_source()
-        assert keywords_name in audience_page.driver.page_source
+        assert audience_page.is_keyword_list_named(keywords_name), "Название набора ключевых слов не отображается"
         audience_page.submit_audience_creation()
 
         audiences = audience_page.get_audiences()
