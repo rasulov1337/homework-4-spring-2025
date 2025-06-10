@@ -125,33 +125,25 @@ class AudiencePage(BasePage):
             self.find_all(self.locators.USERS_LIST_POPUP_ITEM_BTN, 1)[1].click()
 
     def clear_audiences(self):
-        while True:
-            menu_buttons = self.find_all_presence(
-                self.locators.AUDIENCE_MENU_LOCATOR, 4000
-            )
-            if not menu_buttons:
-                break
+        # Ищем кебаб для раскрытия меню для удаления строки
+        menu_button = self.find_presence(self.locators.AUDIENCE_MENU_LOCATOR, 4000)
 
-            menu_btn = menu_buttons[0]
-            ActionChains(self.driver).move_to_element(menu_btn).perform()
+        while menu_button:
+            ActionChains(self.driver).move_to_element(menu_button).perform()
 
             try:
-                delete_btns = self.find_all_presence(
-                    self.locators.AUDIENCE_MENU_DELETE_BTN
-                )
+                delete_btn = self.find_presence(self.locators.AUDIENCE_MENU_DELETE_BTN)
+                delete_btn.click()
 
-                if not delete_btns:
-                    break
-
-                delete_btns[0].click()
-
-                confirm_btns = self.find_all_presence(
+                confirm_btn = self.find_presence(
                     self.locators.AUDIENCE_LIST_POPUP_CONFIRM_DELETION_BTN, timeout=3
                 )
-                if confirm_btns:
-                    confirm_btns[0].click()
+                confirm_btn.click()
+
             except TimeoutException:
                 return
+
+            menu_button = self.find_presence(self.locators.AUDIENCE_MENU_LOCATOR, 4000)
 
     def wait_audience_list_for_load(self):
         self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 5)
