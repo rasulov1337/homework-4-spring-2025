@@ -137,20 +137,19 @@ class AudiencePage(BasePage):
 
             try:
                 delete_btns = self.find_all_presence(
-                    self.locators.AUDIENCE_MENU_ITEM_BTN
+                    self.locators.AUDIENCE_MENU_DELETE_BTN
                 )
-                if len(delete_btns) < 3:
-                    break  # перестраховка
 
-                delete_btns[2].click()
-
-                confirm_btns = self.find_all_presence(
-                    self.locators.AUDIENCE_LIST_POPUP_ITEM_BTN, timeout=3
-                )
-                if len(confirm_btns) < 2:
+                if not delete_btns:
                     break
 
-                confirm_btns[1].click()
+                delete_btns[0].click()
+
+                confirm_btns = self.find_all_presence(
+                    self.locators.AUDIENCE_LIST_POPUP_CONFIRM_DELETION_BTN, timeout=3
+                )
+                if confirm_btns:
+                    confirm_btns[0].click()
             except TimeoutException:
                 return
 
@@ -180,15 +179,15 @@ class AudiencePage(BasePage):
 
     def get_users_list_type_preview(self) -> str:
         return self.find(self.locators.NEW_USERS_LIST_TYPE_PREVIEW).text.strip()
-    
+
     def are_keywords_displayed(self, expected_keywords: list[str]) -> bool:
         elements = self.find_all(self.locators.KEYWORDS_TEXTAREA)
         texts = [el.text.strip() for el in elements]
         return all(k.strip() in texts for k in expected_keywords)
-    
+
     def is_keyword_list_named(self, name: str) -> bool:
         return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None
-    
+
     def is_existing_audience_selected(self, name: str) -> bool:
         return self.is_visible(self.locators.EXISTING_AUDIENCE_SELECT(name))
 

@@ -44,18 +44,27 @@ class AudiencePageLocators(LeftMenuLocators):
     EXISTING_AUDIENCE_SELECT = (By.CSS_SELECTOR, ".vkuiCustomSelect")
     EXISTING_USERS_LIST_SELECT = (By.CSS_SELECTOR, ".vkuiCustomSelect")
     AUDIENCE_MENU_LOCATOR = (By.CSS_SELECTOR, "[data-testid=audience-item-menu]")
-    AUDIENCE_MENU_ITEM_BTN = (By.CSS_SELECTOR, "[data-testid=dropdown-item]")
-    AUDIENCE_LIST_POPUP_ITEM_BTN = (
+    AUDIENCE_MENU_DELETE_BTN = (
         By.XPATH,
-        '//div[contains(@class, "ModalConfirm_buttons")]//button',
+        '//*[@data-testid="dropdown-item"][.//span[contains(text(), "Удалить")]]',
+    )
+    AUDIENCE_LIST_POPUP_CONFIRM_DELETION_BTN = (
+        By.XPATH,
+        '//button[span[span[text()="Удалить"]]]',
     )
     CREATE_AUDIENCE_SOURCE_MODAL = (
         By.XPATH,
         '//div[contains(@class, "ModalRoot_overlay__")]',
     )
     USER_LIST = (By.XPATH, "//span[text()='Список пользователей']")
-    NEW_USERS_LIST_NAME_PREVIEW = (By.XPATH, '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "USER LIST")]')
-    NEW_USERS_LIST_TYPE_PREVIEW = (By.XPATH, '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "Email")]')
+    NEW_USERS_LIST_NAME_PREVIEW = (
+        By.XPATH,
+        '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "USER LIST")]',
+    )
+    NEW_USERS_LIST_TYPE_PREVIEW = (
+        By.XPATH,
+        '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "Email")]',
+    )
 
     @staticmethod
     def EXISTING_AUDIENCE_SELECT_ITEM(audience_name):
@@ -71,12 +80,9 @@ class AudiencePageLocators(LeftMenuLocators):
             f"//*[contains(@class, 'UsersListSelect_option')][text()='{users_list_name}']",
         )
 
-    EXISTING_AUDIENCE_SELECTED = lambda name: (
-        By.XPATH,
-        f'//span[text()="{name}"]'
-    )
+    EXISTING_AUDIENCE_SELECTED = lambda name: (By.XPATH, f'//span[text()="{name}"]')
 
     EXISTING_AUDIENCE_CONFIRMED = lambda name: (
         By.XPATH,
-        f'//div[@data-testid="content"] and .//div[contains(text(), "{name}")]]'
+        f'//div[@data-testid="content"] and .//div[contains(text(), "{name}")]]',
     )
