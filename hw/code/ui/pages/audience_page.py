@@ -174,9 +174,14 @@ class AudiencePage(BasePage):
             return True
         except Exception:
             return False
-        
+
     def get_users_list_name_preview(self) -> str:
         return self.find(self.locators.NEW_USERS_LIST_NAME_PREVIEW).text.strip()
 
     def get_users_list_type_preview(self) -> str:
         return self.find(self.locators.NEW_USERS_LIST_TYPE_PREVIEW).text.strip()
+    
+    def are_keywords_displayed(self, expected_keywords: list[str]) -> bool:
+        elements = self.find_all(self.locators.KEYWORDS_TEXTAREA)
+        texts = [el.text.strip() for el in elements]
+        return all(k.strip() in texts for k in expected_keywords)

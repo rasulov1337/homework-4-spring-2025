@@ -69,8 +69,7 @@ class TestAudience(BaseCase):
             keywords = keywords_file.readlines()
             audience_page.add_key_words(keywords_name, keywords)
 
-            for keyword in keywords:
-                assert keyword in audience_page.driver.page_source
+        assert audience_page.are_keywords_displayed(keywords), "Не все ключевые слова отображаются в списке"
 
         audience_page.submit_audience_source()
         assert keywords_name in audience_page.driver.page_source
