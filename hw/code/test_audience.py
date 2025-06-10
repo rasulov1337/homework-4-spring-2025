@@ -20,8 +20,8 @@ class TestAudience(BaseCase):
             users_list_name, users_list_type, users_list_path
         )
 
-        assert users_list_name in audience_page.driver.page_source
-        assert users_list_type in audience_page.driver.page_source
+        assert audience_page.get_users_list_name_preview() == users_list_name
+        assert audience_page.get_users_list_type_preview() == users_list_type
         audience_page.submit_users_list_creation()
         audience_page.wait_for_success_notify()
 

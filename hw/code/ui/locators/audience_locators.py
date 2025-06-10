@@ -34,6 +34,8 @@ class AudiencePageLocators(LeftMenuLocators):
     AUDIENCE_LIST_POPUP_ITEM_BTN = (By.XPATH, '//div[contains(@class, "ModalConfirm_buttons")]//button')
     CREATE_AUDIENCE_SOURCE_MODAL = (By.XPATH, '//div[contains(@class, "ModalRoot_overlay__")]')
     USER_LIST = (By.XPATH, "//span[text()='Список пользователей']")
+    NEW_USERS_LIST_NAME_PREVIEW = (By.XPATH, '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "USER LIST")]')
+    NEW_USERS_LIST_TYPE_PREVIEW = (By.XPATH, '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "Email")]')
 
     @staticmethod
     def EXISTING_AUDIENCE_SELECT_ITEM(audience_name):

@@ -126,3 +126,9 @@ class AudiencePage(BasePage):
             return True
         except Exception:
             return False
+        
+    def get_users_list_name_preview(self) -> str:
+        return self.find(self.locators.NEW_USERS_LIST_NAME_PREVIEW).text.strip()
+
+    def get_users_list_type_preview(self) -> str:
+        return self.find(self.locators.NEW_USERS_LIST_TYPE_PREVIEW).text.strip()
