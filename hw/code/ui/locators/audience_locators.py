@@ -41,6 +41,11 @@ class AudiencePageLocators(LeftMenuLocators):
     KEYWORDS_NAME_INPUT = (By.CSS_SELECTOR, "[data-testid=name]")
     KEYWORDS_TEXTAREA = (By.CSS_SELECTOR, "[data-testid=positive-phrases]")
     KEYWORD_IN_AUDIENCE = (By.XPATH, "//span[text()='Ключевые фразы']")
+    PARSED_KEYWORDS_DIV = (
+        By.XPATH,
+        '//*[contains(@data-testid, "positive-phrases")]//*[@data-testid="content"]',
+    )
+    KEYWORDS_LIST = (By.XPATH, '//div[@data-testid="content"]')
     EXISTING_AUDIENCE_SELECT = (By.CSS_SELECTOR, ".vkuiCustomSelect")
     EXISTING_USERS_LIST_SELECT = (By.CSS_SELECTOR, ".vkuiCustomSelect")
     AUDIENCE_MENU_LOCATOR = (By.CSS_SELECTOR, "[data-testid=audience-item-menu]")

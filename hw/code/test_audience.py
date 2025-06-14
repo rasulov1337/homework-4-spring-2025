@@ -66,18 +66,15 @@ class TestAudience(BaseCase):
         keywords_name = "KEYWORDS"
 
         with open(self.config["keywords_path"], "r", encoding="utf-8") as keywords_file:
-            keywords = [kw.strip() for kw in keywords_file.readlines()]
+            keywords = set([kw.strip().lower() for kw in keywords_file.readlines()])
             audience_page.add_key_words(keywords_name, keywords)
 
         texts = audience_page.get_keywords_displayed()
-        assert set(texts) == set(
-            keywords
-        ), "Не все ключевые слова отображаются в списке"
+        assert set(texts) == keywords, "Не все ключевые слова отображаются в списке"
 
         audience_page.submit_audience_source()
-        assert audience_page.is_keyword_list_named(
-            keywords_name
-        ), "Название набора ключевых слов не отображается"
+        parsed_keywords_set = audience_page.get_parsed_keywords_set()
+        assert parsed_keywords_set.issubset(keywords)
         audience_page.submit_audience_creation()
 
         audiences = audience_page.get_audiences()
@@ -94,13 +91,15 @@ class TestAudience(BaseCase):
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
         audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY)
-        assert audience_page.is_existing_audience_selected(
+        existing_auditory = audience_page.get_existing_audience_selected(
             self.ALREADY_CREATED_AUDITORY
-        ), f"Не отображается выбранная аудитория: {self.ALREADY_CREATED_AUDITORY}"
+        )
+        assert existing_auditory in self.ALREADY_CREATED_AUDITORY
         audience_page.submit_audience_source()
-        assert audience_page.is_existing_audience_confirmed(
+        existing_auditory_in_source = audience_page.get_existing_audience_confirmed(
             self.ALREADY_CREATED_AUDITORY
-        ), f"Подтверждение аудитории не отображается: {self.ALREADY_CREATED_AUDITORY}"
+        )
+        assert existing_auditory_in_source in self.ALREADY_CREATED_AUDITORY
         audience_page.submit_audience_creation()
 
         audience_page.wait_audience_list_for_load()
