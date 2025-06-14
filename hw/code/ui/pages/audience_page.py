@@ -96,8 +96,8 @@ class AudiencePage(BasePage):
         self.find_all_presence(self.locators.SUBMIT_BTN)[1].click()
 
     def submit_audience_creation(self):
-        self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 1)
-        self.find(self.locators.SUBMIT_BTN, 2).click()
+        self.became_invisible(self.locators.CREATE_AUDIENCE_SOURCE_MODAL, 2)
+        self.find_all_presence(self.locators.SUBMIT_BTN, 2)[0].click()
 
     def add_key_words(
         self,
@@ -106,7 +106,7 @@ class AudiencePage(BasePage):
     ):
         self.fill_in(self.locators.KEYWORDS_NAME_INPUT, name)
 
-        [keywords_textarea, _] = self.find_all(self.locators.KEYWORDS_TEXTAREA)
+        keywords_textarea = self.find(self.locators.KEYWORDS_TEXTAREA)
         for keyword in keywords:
             keywords_textarea.send_keys(keyword)
             keywords_textarea.send_keys(Keys.ENTER)
@@ -172,10 +172,10 @@ class AudiencePage(BasePage):
     def get_users_list_type_preview(self) -> str:
         return self.find(self.locators.NEW_USERS_LIST_TYPE_PREVIEW).text.strip()
 
-    def are_keywords_displayed(self, expected_keywords: list[str]) -> bool:
-        elements = self.find_all(self.locators.KEYWORDS_TEXTAREA)
-        texts = [el.text.strip() for el in elements]
-        return all(k.strip() in texts for k in expected_keywords)
+    def get_keywords_displayed(self):
+        element = self.find(self.locators.KEYWORDS_TEXTAREA)
+        keywords = [keyword.strip() for keyword in element.text.split()]
+        return keywords
 
     def is_keyword_list_named(self, name: str) -> bool:
         return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None
