@@ -162,12 +162,8 @@ class AudiencePage(BasePage):
                 return
         raise AssertionError(f"Не найдена аудитория с именем {users_list_name}")
 
-    def has_users_list_source(self):
-        try:
-            self.find(self.locators.USER_LIST)
-            return True
-        except Exception:
-            return False
+    def get_users_list_name(self):
+        return self.find_presence(self.locators.USER_LIST_NAME, 2).text
 
     def get_users_list_name_preview(self) -> str:
         return self.find(self.locators.NEW_USERS_LIST_NAME_PREVIEW).text.strip()

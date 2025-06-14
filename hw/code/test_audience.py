@@ -4,6 +4,7 @@ from ui.pages.audience_page import AudiencePage, AudienceSource
 
 class TestAudience(BaseCase):
     USERS_LIST_NAME = "USER LIST"
+    USERS_LIST_TYPE = "Email"
     ALREADY_CREATED_AUDITORY_TEXT = f"[auto] Список пользователей / {USERS_LIST_NAME}"
     AUDIENCE_NAME = "AUDIENCE"
     EXISTING_AUDIENCE = "EXISTING_AUDIENCE"
@@ -12,34 +13,30 @@ class TestAudience(BaseCase):
         audience_page.open_users_list_list()
         audience_page.open_users_list_creation()
 
-        users_list_name = "USER LIST"
-        users_list_type = "Email"
         users_list_path = self.config["users_list_path"]
 
         audience_page.create_audience_from_list()
         audience_page.load_new_users_list(
-            users_list_name, users_list_type, users_list_path
+            self.USERS_LIST_NAME, self.USERS_LIST_TYPE, users_list_path
         )
 
-        assert audience_page.get_users_list_name_preview() == users_list_name
-        assert audience_page.get_users_list_type_preview() == users_list_type
+        assert audience_page.get_users_list_name_preview() == self.USERS_LIST_NAME
+        assert audience_page.get_users_list_type_preview() == self.USERS_LIST_TYPE
         audience_page.submit_users_list_creation()
         audience_page.wait_for_success_notify()
 
         users_lists = audience_page.get_users_lists()
         assert len(users_lists) == 1
-        assert users_list_name in users_lists
+        assert self.USERS_LIST_NAME in users_lists
 
     def test_audience_from_uploading_users_list(self, audience_page: AudiencePage):
         audience_page.open_users_list_list()
         audience_page.open_users_list_creation()
 
-        users_list_name = "USER LIST"
-        users_list_type = "Email"
         users_list_path = self.config["users_list_path"]
 
         audience_page.load_new_users_list(
-            users_list_name, users_list_type, users_list_path
+            self.USERS_LIST_NAME, self.USERS_LIST_TYPE, users_list_path
         )
         audience_page.submit_users_list_creation()
         audience_page.wait_for_success_notify()
@@ -47,13 +44,12 @@ class TestAudience(BaseCase):
         audience_page.open_audiences_list()
         audiences = audience_page.get_audiences()
         assert len(audiences) == 1
-        assert f"[auto] Список пользователей / {users_list_name}" in audiences
+        assert f"[auto] Список пользователей / {self.USERS_LIST_NAME}" in audiences
 
-        audience_page.click_created_audience(users_list_name)
+        audience_page.click_created_audience(self.USERS_LIST_NAME)
 
-        assert (
-            audience_page.has_users_list_source()
-        ), "Источник 'Список пользователей' не найден в аудитории"
+        users_list_name = audience_page.get_users_list_name()
+        assert users_list_name == self.USERS_LIST_NAME
 
     def test_audience_from_keywords(self, audience_page: AudiencePage):
         audience_page.open_audience_creation()

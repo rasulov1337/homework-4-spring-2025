@@ -62,6 +62,10 @@ class AudiencePageLocators(LeftMenuLocators):
         '//div[contains(@class, "ModalRoot_overlay__")]',
     )
     USER_LIST = (By.XPATH, "//span[text()='Список пользователей']")
+    USER_LIST_NAME = (
+        By.XPATH,
+        '//span[.//*[text()="Название"]]//*[@data-testid="content"]',
+    )
     NEW_USERS_LIST_NAME_PREVIEW = (
         By.XPATH,
         '//div[contains(@class, "BaseTable__row-cell")]//div[contains(text(), "USER LIST")]',
