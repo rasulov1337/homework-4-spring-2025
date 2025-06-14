@@ -112,7 +112,10 @@ class AudiencePage(BasePage):
             keywords_textarea.send_keys(Keys.ENTER)
 
     def close_modal(self):
-        self.click(self.locators.CLOSE_MODAL_BUTTON)
+        try:
+            self.click(self.locators.CLOSE_MODAL_BUTTON)
+        except TimeoutException:
+            pass
 
     def clear_users_lists(self):
         for menu_btn in self.find_all_presence(
@@ -181,11 +184,11 @@ class AudiencePage(BasePage):
         return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None
 
     def get_existing_audience_selected(self, name: str):
-        audiory_name = self.find(self.locators.EXISTING_AUDIENCE_SELECT(name))
-        return audiory_name
+        auditory_name = self.find(self.locators.EXISTING_AUDIENCE_SELECT).text
+        return auditory_name
 
     def get_existing_audience_confirmed(self, name: str):
-        auditory_name = self.fidnd(self.locators.EXISTING_AUDIENCE_CONFIRMED(name))
+        auditory_name = self.find(self.locators.EXISTING_AUDIENCE_CONFIRMED(name)).text
         return auditory_name
 
     def get_keywords_list(self):

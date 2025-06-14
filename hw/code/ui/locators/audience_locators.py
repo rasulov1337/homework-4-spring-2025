@@ -85,9 +85,11 @@ class AudiencePageLocators(LeftMenuLocators):
             f"//*[contains(@class, 'UsersListSelect_option')][text()='{users_list_name}']",
         )
 
-    EXISTING_AUDIENCE_SELECTED = lambda name: (By.XPATH, f'//span[text()="{name}"]')
+    def EXISTING_AUDIENCE_SELECTED(self, name):
+        return (By.XPATH, f'//span[text()="{name}"]')
 
-    EXISTING_AUDIENCE_CONFIRMED = lambda name: (
-        By.XPATH,
-        f'//div[@data-testid="content"] and .//div[contains(text(), "{name}")]]',
-    )
+    def EXISTING_AUDIENCE_CONFIRMED(self, name):
+        return (
+            By.XPATH,
+            f'//div[@data-testid="content"][.//text()[contains(., "{name}")]]',
+        )

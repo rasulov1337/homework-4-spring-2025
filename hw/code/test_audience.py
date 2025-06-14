@@ -4,7 +4,7 @@ from ui.pages.audience_page import AudiencePage, AudienceSource
 
 class TestAudience(BaseCase):
     USERS_LIST_NAME = "USER LIST"
-    ALREADY_CREATED_AUDITORY = f"[auto] Список пользователей / {USERS_LIST_NAME}"
+    ALREADY_CREATED_AUDITORY_TEXT = f"[auto] Список пользователей / {USERS_LIST_NAME}"
     AUDIENCE_NAME = "AUDIENCE"
     EXISTING_AUDIENCE = "EXISTING_AUDIENCE"
 
@@ -90,16 +90,16 @@ class TestAudience(BaseCase):
         audience_page.open_sources_list()
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
-        audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY)
+        audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY_TEXT)
         existing_auditory = audience_page.get_existing_audience_selected(
-            self.ALREADY_CREATED_AUDITORY
+            self.ALREADY_CREATED_AUDITORY_TEXT
         )
-        assert existing_auditory in self.ALREADY_CREATED_AUDITORY
+        assert existing_auditory == self.ALREADY_CREATED_AUDITORY_TEXT
         audience_page.submit_audience_source()
         existing_auditory_in_source = audience_page.get_existing_audience_confirmed(
-            self.ALREADY_CREATED_AUDITORY
+            self.ALREADY_CREATED_AUDITORY_TEXT
         )
-        assert existing_auditory_in_source in self.ALREADY_CREATED_AUDITORY
+        assert existing_auditory_in_source in self.ALREADY_CREATED_AUDITORY_TEXT
         audience_page.submit_audience_creation()
 
         audience_page.wait_audience_list_for_load()
