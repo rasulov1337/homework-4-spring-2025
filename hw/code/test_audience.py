@@ -91,15 +91,16 @@ class TestAudience(BaseCase):
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
         audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY_TEXT)
-        existing_auditory = audience_page.get_existing_audience_selected(
+        existing_auditory_selected = audience_page.get_existing_audience_selected(
             self.ALREADY_CREATED_AUDITORY_TEXT
         )
-        assert existing_auditory == self.ALREADY_CREATED_AUDITORY_TEXT
+        assert existing_auditory_selected == self.ALREADY_CREATED_AUDITORY_TEXT
         audience_page.submit_audience_source()
-        existing_auditory_in_source = audience_page.get_existing_audience_confirmed(
+
+        existing_audience_confirmed = audience_page.get_existing_audience_confirmed(
             self.ALREADY_CREATED_AUDITORY_TEXT
         )
-        assert existing_auditory_in_source in self.ALREADY_CREATED_AUDITORY_TEXT
+        assert existing_audience_confirmed == self.ALREADY_CREATED_AUDITORY_TEXT
         audience_page.submit_audience_creation()
 
         audience_page.wait_audience_list_for_load()
