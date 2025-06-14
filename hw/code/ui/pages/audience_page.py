@@ -180,8 +180,14 @@ class AudiencePage(BasePage):
     def is_keyword_list_named(self, name: str) -> bool:
         return self.find(self.locators.KEYWORD_IN_AUDIENCE) is not None
 
-    def is_existing_audience_selected(self, name: str) -> bool:
-        return self.is_visible(self.locators.EXISTING_AUDIENCE_SELECT(name))
+    def get_existing_audience_selected(self, name: str):
+        audiory_name = self.find(self.locators.EXISTING_AUDIENCE_SELECT(name))
+        return audiory_name
 
-    def is_existing_audience_confirmed(self, name: str) -> bool:
-        return self.is_visible(self.locators.EXISTING_AUDIENCE_CONFIRMED(name))
+    def get_existing_audience_confirmed(self, name: str):
+        auditory_name = self.fidnd(self.locators.EXISTING_AUDIENCE_CONFIRMED(name))
+        return auditory_name
+
+    def get_keywords_list(self):
+        elements = self.find_all(self.locators.KEYWORDS_LIST).text.strip()
+        return elements

@@ -72,7 +72,8 @@ class TestAudience(BaseCase):
         assert audience_page.are_keywords_displayed(keywords), "Не все ключевые слова отображаются в списке"
 
         audience_page.submit_audience_source()
-        assert audience_page.is_keyword_list_named(keywords_name), "Название набора ключевых слов не отображается"
+        keywords_list = audience_page.get_keywords_list()
+        assert keywords in keywords_list
         audience_page.submit_audience_creation()
 
         audiences = audience_page.get_audiences()
@@ -89,11 +90,11 @@ class TestAudience(BaseCase):
         audience_page.select_audience_source(AudienceSource.EXISTING)
 
         audience_page.add_existing_audience(self.ALREADY_CREATED_AUDITORY)
-        assert audience_page.is_existing_audience_selected(self.ALREADY_CREATED_AUDITORY), \
-            f"Не отображается выбранная аудитория: {self.ALREADY_CREATED_AUDITORY}"
+        existing_auditory = audience_page.get_existing_audience_selected(self.ALREADY_CREATED_AUDITORY)
+        assert existing_auditory in self.ALREADY_CREATED_AUDITORY
         audience_page.submit_audience_source()
-        assert audience_page.is_existing_audience_confirmed(self.ALREADY_CREATED_AUDITORY), \
-            f"Подтверждение аудитории не отображается: {self.ALREADY_CREATED_AUDITORY}"
+        existing_auditory_in_source = audience_page.get_existing_audience_confirmed(self.ALREADY_CREATED_AUDITORY)
+        assert existing_auditory_in_source in self.ALREADY_CREATED_AUDITORY
         audience_page.submit_audience_creation()
 
         audience_page.wait_audience_list_for_load()
